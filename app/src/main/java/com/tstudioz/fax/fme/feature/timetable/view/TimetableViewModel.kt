@@ -1,5 +1,6 @@
 package com.tstudioz.fax.fme.feature.timetable.view
 
+import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.material3.SnackbarHostState
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.common.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.database.models.Event
 import com.tstudioz.fax.fme.database.models.TimeTableInfo
@@ -32,7 +34,8 @@ import java.time.format.DateTimeFormatter
 class TimetableViewModel(
     private val timeTableRepository: TimeTableRepositoryInterface,
     private val userRepository: UserRepositoryInterface,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val application: Application
 ) : ViewModel() {
 
     val snackbarHostState = SnackbarHostState()
@@ -69,7 +72,7 @@ class TimetableViewModel(
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.e("Error timetable", exception.toString())
-        viewModelScope.launch(Dispatchers.Main) { snackbarHostState.showSnackbar("Došlo je do pogreške") }
+        viewModelScope.launch(Dispatchers.Main) { snackbarHostState.showSnackbar(application.getString(R.string.general_error)) }
     }
 
     init {

@@ -85,18 +85,17 @@ fun HomeTabCompose(
     }
 
     Scaffold(
+        modifier = Modifier.padding(innerPaddingValues),
         snackbarHost = { SnackbarHost(hostState = homeViewModel.snackbarHostState) },
         contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
         Box(modifier = Modifier.fillMaxHeight()) {
             if (menzaViewModel.menzaOpened.observeAsState().value == true) {
-                MenzaCompose(menzaViewModel, innerPaddingValues)
+                MenzaCompose(menzaViewModel)
                 return@Scaffold
             }
             LazyColumn(
-                Modifier
-                    .padding(innerPaddingValues)
-                    .padding(paddingValues)
+                Modifier.padding(paddingValues)
             ) {
                 item {
                     Row(

@@ -106,14 +106,17 @@ fun IksicaCompose(iksicaViewModel: IksicaViewModel, innerPaddingValues: PaddingV
             .pullRefresh(pullRefreshState)
             .nestedScroll(TopAppBarDefaults.pinnedScrollBehavior().nestedScrollConnection),
         scaffoldState = scaffoldState,
-        snackbarHost = { SnackbarHost(hostState = iksicaViewModel.snackbarHostState) },
+        snackbarHost = { Box(Modifier.padding(innerPaddingValues)) { SnackbarHost(hostState = iksicaViewModel.snackbarHostState) } },
         sheetContent = {
             if (receiptSelected is IksicaReceiptState.Success)
                 BottomSheetIksica(receiptSelected.data) { iksicaViewModel.hideReceiptDetails() }
-        }) {
-        Box(Modifier
-            .fillMaxWidth()
-            .padding(innerPaddingValues)) {
+        }
+    ) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(innerPaddingValues)
+        ) {
             PullRefreshIndicator(
                 isRefreshing, pullRefreshState, Modifier
                     .align(Alignment.TopCenter)

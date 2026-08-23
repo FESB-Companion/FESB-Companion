@@ -60,7 +60,7 @@ fun StudomatCompose(studomatViewModel: StudomatViewModel, innerPaddingValues: Pa
     Scaffold(
         modifier = Modifier.pullRefresh(pullRefreshState),
         contentWindowInsets = WindowInsets(0.dp),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { Box(Modifier.padding(innerPaddingValues)){ SnackbarHost(hostState = snackbarHostState) } }
     ) { innerPadding ->
         Box(
             modifier = Modifier

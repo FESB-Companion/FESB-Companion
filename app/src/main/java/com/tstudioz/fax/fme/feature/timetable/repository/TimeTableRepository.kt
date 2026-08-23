@@ -92,7 +92,3 @@ class TimeTableRepository(
     }
 
 }
-
-private fun Long.hasPassedMoreThan(seconds: Long): Boolean {
-    return this + seconds * 1000 < System.currentTimeMillis()
-}
