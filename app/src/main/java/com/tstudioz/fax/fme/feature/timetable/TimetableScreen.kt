@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,17 +60,17 @@ import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.contentColors
-import com.tstudioz.fax.fme.theme.eventCardBackground
-import com.tstudioz.fax.fme.feature.timetable.models.Event
-import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
-import com.tstudioz.fax.fme.feature.timetable.utils.MonthData
-import com.tstudioz.fax.fme.feature.timetable.utils.TimetableDateFormatter
 import com.tstudioz.fax.fme.feature.timetable.compose.EventBottomSheet
 import com.tstudioz.fax.fme.feature.timetable.compose.SimpleCalendarTitle
 import com.tstudioz.fax.fme.feature.timetable.compose.schedule.PositionedEvent
 import com.tstudioz.fax.fme.feature.timetable.compose.schedule.Schedule
 import com.tstudioz.fax.fme.feature.timetable.compose.schedule.SplitType
+import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
+import com.tstudioz.fax.fme.feature.timetable.utils.MonthData
+import com.tstudioz.fax.fme.feature.timetable.utils.TimetableDateFormatter
+import com.tstudioz.fax.fme.theme.contentColors
+import com.tstudioz.fax.fme.theme.eventCardBackground
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -77,7 +78,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.TextStyle
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class, InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
 @Composable
@@ -311,7 +311,7 @@ fun SidebarLabel(
 fun DayHeader(day: LocalDate) {
     val dayOfWeek = day
         .dayOfWeek
-        .getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        .getDisplayName(TextStyle.SHORT, LocalLocale.current.platformLocale)
         .take(3)
         .lowercase()
         .replaceFirstChar { it.uppercase() }

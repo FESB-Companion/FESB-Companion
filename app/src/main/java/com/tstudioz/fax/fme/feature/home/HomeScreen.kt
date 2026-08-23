@@ -29,6 +29,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,8 +39,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.AppTheme
-import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.attendance.models.Note
 import com.tstudioz.fax.fme.feature.home.compose.CardsCompose
 import com.tstudioz.fax.fme.feature.home.compose.NotesCompose
@@ -48,12 +47,13 @@ import com.tstudioz.fax.fme.feature.home.models.WeatherDisplay
 import com.tstudioz.fax.fme.feature.home.utils.getWeatherText
 import com.tstudioz.fax.fme.feature.menza.MenzaScreen
 import com.tstudioz.fax.fme.feature.menza.MenzaViewModel
+import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.routing.HomeRouter
+import com.tstudioz.fax.fme.theme.AppTheme
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import java.time.LocalDate
-import java.util.Locale
 
 val sidePadding = 24.dp
 
@@ -163,7 +163,7 @@ fun WeatherCompose(
                 text = stringResource(
                     R.string.weather_info,
                     weather.location,
-                    stringResource(getWeatherText(weather.summary.lowercase(Locale.getDefault()))),
+                    stringResource(getWeatherText(weather.summary.lowercase(LocalLocale.current.platformLocale))),
                     weather.temperature
                 ),
                 style = MaterialTheme.typography.bodySmall,

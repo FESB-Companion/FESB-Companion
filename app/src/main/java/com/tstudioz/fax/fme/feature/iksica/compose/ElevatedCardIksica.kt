@@ -23,16 +23,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.feature.iksica.models.StudentData
 import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.theme.glowingColor
 import com.tstudioz.fax.fme.theme.gradientColors
-import com.tstudioz.fax.fme.feature.iksica.models.StudentData
-import java.util.Locale
 
 @Preview
 @Composable
@@ -118,7 +118,7 @@ fun ElevatedCardIksica(
                     Text(
                         text = stringResource(
                             id = R.string.iksica_balance,
-                            String.format(Locale.getDefault(), "%.2f", balance)
+                            String.format(LocalLocale.current.platformLocale, "%.2f", balance)
                         ),
                         style = MaterialTheme.typography.displaySmall,
                         fontWeight = FontWeight.ExtraBold,
@@ -145,7 +145,7 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             )
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.daily_support_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(Locale.getDefault(), "%.2f", studentInfo.dailySupport)
+                    id = R.string.iksica_balance, String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.dailySupport)
                 )
             )
             CardIksicaPopupRow(leftText = stringResource(R.string.oib_label), rightText = studentInfo.oib)
@@ -161,7 +161,7 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             CardIksicaPopupRow(leftText = stringResource(R.string.right_until_label), rightText = studentInfo.rightsTo)
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.card_balance_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(Locale.getDefault(), "%.2f", studentInfo.balance)
+                    id = R.string.iksica_balance, String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.balance)
                 ), divider = false
             )
         }
