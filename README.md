@@ -4,7 +4,8 @@
   <b>Your everyday companion for student life at FESB.</b>
 </p>
 
-FESB Companion is an Android application designed to help students of the Faculty of Electrical Engineering, Mechanical Engineering and Naval Architecture (FESB) manage their academic life more easily.
+FESB Companion is an Android application designed to help students of the Faculty of Electrical Engineering, Mechanical
+Engineering and Naval Architecture (FESB) manage their academic life more easily.
 
 The app provides quick access to important student information and useful campus tools in one modern interface.
 
@@ -84,7 +85,8 @@ The project follows modern Android development principles:
 git clone https://github.com/FESB-Companion/FESB-Companion.git
 ```
 
-Open the project in Android Studio, wait for Gradle synchronization, and run the application on an emulator or physical Android device.
+Open the project in Android Studio, wait for Gradle synchronization, and run the application on an emulator or physical
+Android device.
 
 ---
 

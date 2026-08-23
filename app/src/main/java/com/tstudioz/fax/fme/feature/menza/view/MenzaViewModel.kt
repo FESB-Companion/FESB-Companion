@@ -6,11 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.tstudioz.fax.fme.feature.menza.repository.CamerasRepositoryInterface
-import com.tstudioz.fax.fme.feature.menza.menzaLocations
-import com.tstudioz.fax.fme.feature.menza.models.MenzaLocation
 import com.tstudioz.fax.fme.feature.menza.MenzaResult
+import com.tstudioz.fax.fme.feature.menza.menzaLocations
 import com.tstudioz.fax.fme.feature.menza.models.Menza
+import com.tstudioz.fax.fme.feature.menza.models.MenzaLocation
+import com.tstudioz.fax.fme.feature.menza.repository.CamerasRepositoryInterface
 import com.tstudioz.fax.fme.feature.menza.repository.MenzaRepositoryInterface
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -24,6 +24,7 @@ import okhttp3.HttpUrl
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import kotlin.time.Duration.Companion.milliseconds
 
 
 @InternalCoroutinesApi
@@ -106,7 +107,7 @@ class MenzaViewModel(
                 if (LocalTime.now().second.mod(interval) == 4) {
                     getImageUrl(location)
                 }
-                delay(1000L)
+                delay(1000.milliseconds)
             }
         }
     }

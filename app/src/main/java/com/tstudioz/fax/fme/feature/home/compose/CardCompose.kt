@@ -26,7 +26,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
-fun CardsCompose(openMenza: ()-> Unit, homeViewModel: HomeViewModel) {
+fun CardsCompose(openMenza: () -> Unit, homeViewModel: HomeViewModel) {
     Row(Modifier.padding(horizontal = sidePadding)) {
         Box(
             Modifier

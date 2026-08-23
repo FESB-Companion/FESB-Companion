@@ -111,7 +111,9 @@ fun IksicaCompose(iksicaViewModel: IksicaViewModel, innerPaddingValues: PaddingV
             if (receiptSelected is IksicaReceiptState.Success)
                 BottomSheetIksica(receiptSelected.data) { iksicaViewModel.hideReceiptDetails() }
         }) {
-        Box(Modifier.fillMaxWidth().padding(innerPaddingValues)) {
+        Box(Modifier
+            .fillMaxWidth()
+            .padding(innerPaddingValues)) {
             PullRefreshIndicator(
                 isRefreshing, pullRefreshState, Modifier
                     .align(Alignment.TopCenter)

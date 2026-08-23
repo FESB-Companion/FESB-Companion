@@ -53,14 +53,14 @@ fun AddNoteCompose(insertNote: (note: Note) -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val iconSize = Dp(MaterialTheme.typography.bodyMedium.lineHeight.value)
     val height = 28.dp
-    var measuredHeight: MutableIntState = remember { mutableIntStateOf(0) }
+    val measuredHeight: MutableIntState = remember { mutableIntStateOf(0) }
 
     Spacer(Modifier.height(8.dp))
     if (!openDialog.value) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .onGloballyPositioned{ measuredHeight.intValue = it.size.height }
+                .onGloballyPositioned { measuredHeight.intValue = it.size.height }
                 .fillMaxWidth()
                 .padding(vertical = 2.dp)
                 .clip(RoundedCornerShape(20.dp))
@@ -160,7 +160,7 @@ fun AddNoteCompose(insertNote: (note: Note) -> Unit) {
 @Preview
 @Composable
 fun AddNotePreview() {
-    AppTheme() {
+    AppTheme {
         Surface {
             AddNoteCompose { }
         }

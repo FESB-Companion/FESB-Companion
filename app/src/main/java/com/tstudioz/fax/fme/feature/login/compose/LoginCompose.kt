@@ -157,7 +157,8 @@ fun CustomTextField(textFieldModel: TextFieldModel) {
     )
     val textFieldShape = RoundedCornerShape(10.dp)
 
-    val customHighlightColor = Color.Transparent // removed color for autofill highlight because of a bad clip, can't clip properly because of the top letters
+    val customHighlightColor =
+        Color.Transparent // removed color for autofill highlight because of a bad clip, can't clip properly because of the top letters
     CompositionLocalProvider(LocalAutofillHighlightColor provides customHighlightColor) {
         OutlinedTextField(
             value = textFieldModel.text.observeAsState().value ?: "",

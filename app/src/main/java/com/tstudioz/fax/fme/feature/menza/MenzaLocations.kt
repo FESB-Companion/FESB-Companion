@@ -68,6 +68,7 @@ enum class MenzaLocationType(val string: String) {
     KAMPUS("kampus"),
     EFST("efst"),
     FGAG("fgag"),
+
     // FESB_VRH("fesb_vrh"), curently closed
     FESB_STOP("fesb_stop"),
 }

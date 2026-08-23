@@ -53,24 +53,25 @@ fun Rotatable90Image(imageUrl: String?, contentDescription: String) {
         })
     }
 
-    GlideImage(url = imageUrl, contentDescription = contentDescription, modifier = Modifier
-        .aspectRatio(aspectRatio.floatValue.coerceIn(1 / ratio..ratio))
-        .animateContentSize()
-        .graphicsLayer(
-            scaleX = scale.floatValue,
-            scaleY = scale.floatValue,
-            rotationZ = rotationState.floatValue,
-        )
-        .clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null
-        ) {
-            manualRotation.value = !manualRotation.value
-            rotate(
-                if (manualRotation.value) Orientation.LANDSCAPE_LEFT
-                else Orientation.PORTRAIT
+    GlideImage(
+        url = imageUrl, contentDescription = contentDescription, modifier = Modifier
+            .aspectRatio(aspectRatio.floatValue.coerceIn(1 / ratio..ratio))
+            .animateContentSize()
+            .graphicsLayer(
+                scaleX = scale.floatValue,
+                scaleY = scale.floatValue,
+                rotationZ = rotationState.floatValue,
             )
-        })
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+                manualRotation.value = !manualRotation.value
+                rotate(
+                    if (manualRotation.value) Orientation.LANDSCAPE_LEFT
+                    else Orientation.PORTRAIT
+                )
+            })
 }
 
 @Composable

@@ -32,7 +32,12 @@ import java.util.concurrent.TimeUnit
 @OptIn(ExperimentalCoroutinesApi::class)
 @InternalCoroutinesApi
 val module = module {
-    single { Router(get()) } binds arrayOf(LoginRouter::class, SettingsRouter::class, HomeRouter::class, AppRouter::class)
+    single { Router(get()) } binds arrayOf(
+        LoginRouter::class,
+        SettingsRouter::class,
+        HomeRouter::class,
+        AppRouter::class
+    )
     single { MonsterCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(androidContext())) }
     single<FESBLoginInterceptor>(named("FESBInterceptor")) { FESBLoginInterceptor(get(), get(), get()) }
     single<OkHttpClient> { provideOkHttpClient(get()) }

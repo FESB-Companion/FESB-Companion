@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:shortcutId="timetable"
         android:enabled="true"
         android:icon="@drawable/schedule_shortcut_icon"
-        android:shortcutShortLabel="@string/timetable_quick"
+        android:shortcutDisabledMessage="@string/unavailabe"
+        android:shortcutId="timetable"
         android:shortcutLongLabel="@string/check_timetable"
-        android:shortcutDisabledMessage="@string/unavailabe">
+        android:shortcutShortLabel="@string/timetable_quick">
         <intent
             android:action="raspored"
-            android:targetPackage="com.tstudioz.fax.fme"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity" />
+            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
     <shortcut
-        android:shortcutId="attendance"
         android:enabled="true"
         android:icon="@drawable/attend_shortcut_icon"
-        android:shortcutShortLabel="@string/attend_quick"
+        android:shortcutDisabledMessage="@string/unavailabe"
+        android:shortcutId="attendance"
         android:shortcutLongLabel="@string/check_attend"
-        android:shortcutDisabledMessage="@string/unavailabe">
+        android:shortcutShortLabel="@string/attend_quick">
         <intent
             android:action="prisutnost"
-            android:targetPackage="com.tstudioz.fax.fme"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity" />
+            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
     <shortcut
-        android:shortcutId="reminder"
         android:enabled="true"
         android:icon="@drawable/reminder_shortcut_icon"
-        android:shortcutShortLabel="@string/add_reminder_short"
+        android:shortcutDisabledMessage="@string/unavailabe"
+        android:shortcutId="reminder"
         android:shortcutLongLabel="@string/add_reminder_long"
-        android:shortcutDisabledMessage="@string/unavailabe">
+        android:shortcutShortLabel="@string/add_reminder_short">
         <intent
             android:action="podsjetnik"
-            android:targetPackage="com.tstudioz.fax.fme"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity" />
+            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
 </shortcuts>

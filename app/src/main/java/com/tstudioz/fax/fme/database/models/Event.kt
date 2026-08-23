@@ -1,13 +1,13 @@
 package com.tstudioz.fax.fme.database.models
 
 import androidx.compose.ui.graphics.Color
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.tstudioz.fax.fme.compose.accentBlue
 import com.tstudioz.fax.fme.compose.accentGreen
 import com.tstudioz.fax.fme.compose.accentGrey
 import com.tstudioz.fax.fme.compose.accentPurple
 import com.tstudioz.fax.fme.compose.accentRed
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
 
@@ -110,7 +110,7 @@ enum class TimetableType(val value: String) {
 
     companion object {
         fun setType(typeValue: String): TimetableType = TimetableType
-            .entries.firstOrNull { it.value == typeValue } ?: TimetableType.OTHER
+            .entries.firstOrNull { it.value == typeValue } ?: OTHER
     }
 }
 

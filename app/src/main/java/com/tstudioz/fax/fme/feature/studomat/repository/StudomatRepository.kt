@@ -57,7 +57,7 @@ class StudomatRepository(
 
     fun readData(): List<StudomatYear> {
         val years = studomatDao.readYears().sortedBy { it.academicYear }
-        val subjects = studomatDao.read().sortedByNameAndSemester().groupBy { it.year  }
+        val subjects = studomatDao.read().sortedByNameAndSemester().groupBy { it.year }
         return years.mapNotNull { yearInfo ->
             subjects[yearInfo.academicYear]?.let { subjectsForYearAndCourse ->
                 StudomatYear(yearInfo, subjectsForYearAndCourse)

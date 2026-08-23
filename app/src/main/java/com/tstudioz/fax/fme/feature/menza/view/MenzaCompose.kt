@@ -36,7 +36,9 @@ fun MenzaCompose(menzaViewModel: MenzaViewModel, paddingValues: PaddingValues) {
     val imageUrl = menzaViewModel.images.observeAsState().value
     val menzas = menzaViewModel.menza.observeAsState().value
 
-    Surface(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+    Surface(modifier = Modifier
+        .fillMaxSize()
+        .padding(paddingValues)) {
         val pageCount = menzaLocations.size
         val state = rememberPagerState(
             initialPage = (pageCount.div(2)),

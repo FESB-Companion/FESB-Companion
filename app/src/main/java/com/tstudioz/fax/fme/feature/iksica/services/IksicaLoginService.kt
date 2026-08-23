@@ -27,7 +27,7 @@ class IksicaLoginService(
         val body = response.body?.string() ?: ""
         val doc = Jsoup.parse(body)
 
-        successfulIsspLoginAlready =  doc.selectFirst("a[aria-label='povratak u sustav']")
+        successfulIsspLoginAlready = doc.selectFirst("a[aria-label='povratak u sustav']")
             ?.text()?.contains("Povratak u sustav", true) == true
         successfulAaieduLoginAlready = doc.selectFirst("div[class=onscript-msg]")
             ?.text()?.contains("Uspješno ste autenticirani.", true) == true

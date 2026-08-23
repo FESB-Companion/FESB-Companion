@@ -19,7 +19,8 @@ class ISVULoginInterceptor(
 ) : Interceptor {
 
     private val loginMutex = Mutex()
-    @Volatile private var ongoingRefresh: CompletableDeferred<Unit>? = null
+    @Volatile
+    private var ongoingRefresh: CompletableDeferred<Unit>? = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()

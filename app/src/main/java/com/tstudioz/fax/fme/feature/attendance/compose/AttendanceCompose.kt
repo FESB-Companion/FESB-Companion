@@ -65,7 +65,7 @@ fun AttendanceCompose(attendanceViewModel: AttendanceViewModel, innerPaddingValu
         }
     }
 
-    Box(Modifier.padding(innerPaddingValues)){
+    Box(Modifier.padding(innerPaddingValues)) {
         if (items.isNotEmpty()) {
             CreateAttendanceListView(attendanceViewModel, snackbarHostState)
         } else {

@@ -45,44 +45,47 @@ fun ElevatedCardIksica(
     val cornersRadius = 30.dp
     val glowingRadius = 100.dp
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(24.dp, 30.dp, 24.dp, 50.dp)
-        .aspectRatio(1.586f)
-        .drawBehind {
-            val canvasSize = size
-            drawContext.canvas.nativeCanvas.apply {
-                drawRoundRect(
-                    0f,
-                    0f,
-                    canvasSize.width, canvasSize.height,
-                    cornersRadius.toPx(), cornersRadius.toPx(),
-                    Paint().apply {
-                        isAntiAlias = true
-                        setShadowLayer(glowingRadius.toPx(), 0f, 0f, glowingColor.toArgb())
-                    })
-                drawRoundRect(
-                    0f,
-                    0f,
-                    canvasSize.width, canvasSize.height,
-                    cornersRadius.toPx(), cornersRadius.toPx(),
-                    Paint().apply {
-                        isAntiAlias = true
-                        setShadowLayer((glowingRadius / 4).toPx(), 0f, 0f, glowingColor.toArgb())
-                    })
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp, 30.dp, 24.dp, 50.dp)
+            .aspectRatio(1.586f)
+            .drawBehind {
+                val canvasSize = size
+                drawContext.canvas.nativeCanvas.apply {
+                    drawRoundRect(
+                        0f,
+                        0f,
+                        canvasSize.width, canvasSize.height,
+                        cornersRadius.toPx(), cornersRadius.toPx(),
+                        Paint().apply {
+                            isAntiAlias = true
+                            setShadowLayer(glowingRadius.toPx(), 0f, 0f, glowingColor.toArgb())
+                        })
+                    drawRoundRect(
+                        0f,
+                        0f,
+                        canvasSize.width, canvasSize.height,
+                        cornersRadius.toPx(), cornersRadius.toPx(),
+                        Paint().apply {
+                            isAntiAlias = true
+                            setShadowLayer((glowingRadius / 4).toPx(), 0f, 0f, glowingColor.toArgb())
+                        })
+                }
             }
-        }
-        .clip(shape = RoundedCornerShape(cornersRadius))
-        .angledGradientBackground(colors = gradientColors, degrees = 32f)
+            .clip(shape = RoundedCornerShape(cornersRadius))
+            .angledGradientBackground(colors = gradientColors, degrees = 32f)
     ) {
         Column(
             Modifier.clickable { onClick() },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(Modifier
-                .padding(25.dp)
-                .weight(0.7f)) {
+            Column(
+                Modifier
+                    .padding(25.dp)
+                    .weight(0.7f)
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start

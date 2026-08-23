@@ -13,6 +13,7 @@ import com.tstudioz.fax.fme.feature.timetable.di.timetableModule
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
 import com.tstudioz.fax.fme.networking.session.SessionDelegateInterface
 import com.tstudioz.fax.fme.routing.AppRouter
+import com.tstudioz.fax.fme.util.PreferenceHelper.get
 import com.tstudioz.fax.fme.util.SPKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import com.tstudioz.fax.fme.util.PreferenceHelper.get
 
 @InternalCoroutinesApi
 class FESBCompanion : Application() {

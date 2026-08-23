@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.currentStateAsState
 import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.compose.studomatBlue
 import com.tstudioz.fax.fme.feature.studomat.view.StudomatViewModel
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import org.koin.compose.koinInject
-import androidx.lifecycle.compose.currentStateAsState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

@@ -31,6 +31,7 @@ class ISSPLoginInterceptor(
     }
 
     private val loginMutex = Mutex()
+
     @Volatile
     private var ongoingRefresh: CompletableDeferred<Unit>? = null
 

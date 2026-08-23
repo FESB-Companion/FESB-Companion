@@ -23,8 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.feature.menza.models.MenzaLocation
 import com.tstudioz.fax.fme.feature.menza.models.Menza
+import com.tstudioz.fax.fme.feature.menza.models.MenzaLocation
 import kotlinx.coroutines.InternalCoroutinesApi
 import okhttp3.HttpUrl
 import java.time.LocalDateTime
@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun ImageMeniView(
     menzaViewModel: MenzaViewModel,
-    imgUrl:HttpUrl?,
+    imgUrl: HttpUrl?,
     menza: Pair<MenzaLocation, Menza?>?
 ) {
     BackHandler {

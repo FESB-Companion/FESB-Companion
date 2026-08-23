@@ -83,7 +83,7 @@ fun checkAndFixPrice(pricee: String): String {
     return price
 }
 
-fun mealTimeTest(title: String) : MealTime {
+fun mealTimeTest(title: String): MealTime {
     val firstLetter = title.getOrNull(0) ?: return MealTime.LUNCH
     return if (firstLetter == 'R') MealTime.LUNCH else if (firstLetter == 'V') MealTime.DINNER else MealTime.LUNCH
 }

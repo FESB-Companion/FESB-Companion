@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import com.tstudioz.fax.fme.feature.login.view.LoginActivity
 import com.tstudioz.fax.fme.feature.settings.SettingsActivity
 import com.tstudioz.fax.fme.feature.settings.model.EmailModalModel
@@ -11,7 +12,6 @@ import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey
 import com.tstudioz.fax.fme.view.activities.MainActivity
 import java.lang.ref.WeakReference
-import androidx.core.net.toUri
 
 class Router(val sharedPreferences: SharedPreferences) : AppRouter, LoginRouter, HomeRouter, SettingsRouter {
 
