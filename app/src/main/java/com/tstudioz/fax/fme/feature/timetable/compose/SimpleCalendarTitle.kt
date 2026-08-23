@@ -28,7 +28,7 @@ import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.theme.contentColors
 import java.time.YearMonth
 import java.time.format.TextStyle
-import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 @Composable
 fun SimpleCalendarTitle(
@@ -49,8 +49,8 @@ fun SimpleCalendarTitle(
         Text(
             modifier = Modifier
                 .weight(1f),
-            text = currentMonth.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
-                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            text = currentMonth.month.getDisplayName(TextStyle.FULL_STANDALONE, LocalLocale.current.platformLocale)
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(LocalLocale.current.platformLocale) else it.toString() }
                     + " " + currentMonth.year.toString(),
             fontSize = 22.sp,
             textAlign = TextAlign.Center,

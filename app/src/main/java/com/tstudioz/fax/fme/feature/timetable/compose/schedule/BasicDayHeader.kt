@@ -12,13 +12,14 @@ import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
+import androidx.compose.ui.platform.LocalLocale
 
 
 private val DayFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
 
 @Composable
 fun BasicDayHeader(day: LocalDate) {
-    val title = day.dayOfWeek.getDisplayName(TextStyle.SHORT, java.util.Locale.getDefault()).take(3).lowercase()
+    val title = day.dayOfWeek.getDisplayName(TextStyle.SHORT, LocalLocale.current.platformLocale).take(3).lowercase()
         .replaceFirstChar { it.uppercase() } + " " + day.format(DayFormatter)
     Text(
         text = title,
