@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -120,7 +119,6 @@ fun TimetableCompose(timetableViewModel: TimetableViewModel, innerPaddingValues:
                     ModalBottomSheet(
                         sheetState = sheetStateEvent,
                         onDismissRequest = { hideEvent() },
-                        contentWindowInsets = { WindowInsets(0.dp) },
                         dragHandle = { },
                     ) {
                         EventBottomSheet(event)
@@ -129,7 +127,6 @@ fun TimetableCompose(timetableViewModel: TimetableViewModel, innerPaddingValues:
                     ModalBottomSheet(
                         sheetState = sheetStateCalendar,
                         onDismissRequest = { showWeekChooseMenu(false) },
-                        contentWindowInsets = { WindowInsets(0.dp) },
                         containerColor = MaterialTheme.colorScheme.surface,
                         dragHandle = { },
                     ) {
