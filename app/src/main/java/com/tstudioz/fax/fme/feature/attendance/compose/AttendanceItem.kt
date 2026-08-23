@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.accentGreen
-import com.tstudioz.fax.fme.compose.accentRed
-import com.tstudioz.fax.fme.compose.contentColors
-import com.tstudioz.fax.fme.compose.theme_dark_primaryContainer
-import com.tstudioz.fax.fme.compose.theme_dark_surface
+import com.tstudioz.fax.fme.theme.accentGreen
+import com.tstudioz.fax.fme.theme.accentRed
+import com.tstudioz.fax.fme.theme.contentColors
+import com.tstudioz.fax.fme.theme.theme_dark_primaryContainer
+import com.tstudioz.fax.fme.theme.theme_dark_surface
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 
 

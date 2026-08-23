@@ -33,9 +33,9 @@ import com.tbuonomo.viewpagerdotsindicator.compose.DotsIndicator
 import com.tbuonomo.viewpagerdotsindicator.compose.model.DotGraphic
 import com.tbuonomo.viewpagerdotsindicator.compose.type.BalloonIndicatorType
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.studomatBlue
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
+import com.tstudioz.fax.fme.theme.studomatBlue
 
 @Composable
 fun StudomatContent(studomatData: List<StudomatYear>, onClick: () -> Unit = {}) {
@@ -63,8 +63,7 @@ fun StudomatContent(studomatData: List<StudomatYear>, onClick: () -> Unit = {}) 
                         .padding(24.dp)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
+                    horizontalArrangement = Arrangement.Start) {
                     Icon(
                         painter = painterResource(id = R.drawable.open_icon),
                         contentDescription = stringResource(R.string.webview),
@@ -90,8 +89,7 @@ fun YearTitle(yearInfo: StudomatYearInfo) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Box(
-            contentAlignment = Alignment.BottomCenter,
-            modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 0.dp)
+            contentAlignment = Alignment.BottomCenter, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 0.dp)
         ) {
             // Empty text for vertical alignment purposes.
             Text(
@@ -121,16 +119,11 @@ fun DotIndicatorsStudomat(pageCount: Int, pagerState: PagerState) {
             .padding(vertical = 16.dp)
     ) {
         DotsIndicator(
-            dotCount = pageCount,
-            type = BalloonIndicatorType(
+            dotCount = pageCount, type = BalloonIndicatorType(
                 dotsGraphic = DotGraphic(
-                    color = lerp(studomatBlue, Color.White, 0.5f),
-                    size = 6.dp
-                ),
-                balloonSizeFactor = 1.7f
-            ),
-            dotSpacing = 20.dp,
-            pagerState = pagerState
+                    color = lerp(studomatBlue, Color.White, 0.5f), size = 6.dp
+                ), balloonSizeFactor = 1.7f
+            ), dotSpacing = 20.dp, pagerState = pagerState
         )
     }
 }

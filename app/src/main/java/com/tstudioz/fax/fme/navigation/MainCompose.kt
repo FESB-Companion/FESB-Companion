@@ -23,17 +23,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.feature.attendance.compose.AttendanceCompose
-import com.tstudioz.fax.fme.feature.attendance.view.AttendanceViewModel
-import com.tstudioz.fax.fme.feature.home.view.HomeTabCompose
-import com.tstudioz.fax.fme.feature.home.view.HomeViewModel
-import com.tstudioz.fax.fme.feature.iksica.compose.IksicaCompose
-import com.tstudioz.fax.fme.feature.iksica.view.IksicaViewModel
-import com.tstudioz.fax.fme.feature.studomat.compose.StudomatCompose
-import com.tstudioz.fax.fme.feature.studomat.view.StudomatViewModel
-import com.tstudioz.fax.fme.feature.timetable.view.TimetableViewModel
-import com.tstudioz.fax.fme.feature.timetable.view.compose.TimetableCompose
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.feature.attendance.AttendanceScreen
+import com.tstudioz.fax.fme.feature.attendance.AttendanceViewModel
+import com.tstudioz.fax.fme.feature.home.HomeScreen
+import com.tstudioz.fax.fme.feature.home.HomeViewModel
+import com.tstudioz.fax.fme.feature.iksica.IksicaScreen
+import com.tstudioz.fax.fme.feature.iksica.IksicaViewModel
+import com.tstudioz.fax.fme.feature.studomat.StudomatScreen
+import com.tstudioz.fax.fme.feature.studomat.StudomatViewModel
+import com.tstudioz.fax.fme.feature.timetable.TimetableViewModel
+import com.tstudioz.fax.fme.feature.timetable.TimetableScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.compose.koinViewModel
@@ -88,19 +88,19 @@ fun MainNavHost(
                 ExitTransition.None
             }) {
             composable<Iksica> {
-                IksicaCompose(iksicaViewModel, innerPaddingValues = innerPadding)
+                IksicaScreen(iksicaViewModel, innerPaddingValues = innerPadding)
             }
             composable<Attendance> {
-                AttendanceCompose(attendanceViewModel, innerPaddingValues = innerPadding)
+                AttendanceScreen(attendanceViewModel, innerPaddingValues = innerPadding)
             }
             composable<Home> {
-                HomeTabCompose(homeViewModel, innerPaddingValues = innerPadding)
+                HomeScreen(homeViewModel, innerPaddingValues = innerPadding)
             }
             composable<TimeTable> {
-                TimetableCompose(timetableViewModel, innerPaddingValues = innerPadding)
+                TimetableScreen(timetableViewModel, innerPaddingValues = innerPadding)
             }
             composable<Studomat> {
-                StudomatCompose(studomatViewModel, innerPaddingValues = innerPadding)
+                StudomatScreen(studomatViewModel, innerPaddingValues = innerPadding)
             }
         }
     }

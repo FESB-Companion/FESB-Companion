@@ -26,10 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.contentColors
+import com.tstudioz.fax.fme.theme.contentColors
 import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptItem
-import com.tstudioz.fax.fme.feature.iksica.roundToTwo
+import com.tstudioz.fax.fme.feature.iksica.models.roundToTwo
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)

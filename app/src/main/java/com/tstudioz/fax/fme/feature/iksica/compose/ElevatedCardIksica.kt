@@ -28,9 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.compose.glowingColor
-import com.tstudioz.fax.fme.compose.gradientColors
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.theme.glowingColor
+import com.tstudioz.fax.fme.theme.gradientColors
 import com.tstudioz.fax.fme.feature.iksica.models.StudentData
 import java.util.Locale
 

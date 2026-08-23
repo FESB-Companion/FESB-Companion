@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.notesContainer
-import com.tstudioz.fax.fme.database.models.Note
+import com.tstudioz.fax.fme.theme.notesContainer
+import com.tstudioz.fax.fme.feature.attendance.models.Note
 
 @Composable
 fun NotesCompose(

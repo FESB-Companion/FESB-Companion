@@ -8,7 +8,7 @@ import com.tstudioz.fax.fme.feature.iksica.services.IksicaLoginService
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaLoginServiceInterface
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaService
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaServiceInterface
-import com.tstudioz.fax.fme.feature.iksica.view.IksicaViewModel
+import com.tstudioz.fax.fme.feature.iksica.IksicaViewModel
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import com.tstudioz.fax.fme.networking.interceptors.ISSPLoginInterceptor
 import kotlinx.coroutines.InternalCoroutinesApi

@@ -10,7 +10,7 @@ import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.studomat.repository.models.StudomatRepositoryResult
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatService
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 
 class StudomatRepository(
     private val studomatService: StudomatService,

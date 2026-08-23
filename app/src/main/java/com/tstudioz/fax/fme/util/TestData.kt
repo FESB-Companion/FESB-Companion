@@ -1,8 +1,8 @@
 package com.tstudioz.fax.fme.util
 
-import com.tstudioz.fax.fme.database.models.Event
-import com.tstudioz.fax.fme.database.models.EventRoom
-import com.tstudioz.fax.fme.database.models.TimetableType
+import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
+import com.tstudioz.fax.fme.feature.timetable.models.TimetableType
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
 import com.tstudioz.fax.fme.feature.iksica.models.StudentDataRoom

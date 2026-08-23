@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.database.models.Event
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.util.testEvents
 import java.time.Duration
 import java.time.format.DateTimeFormatter

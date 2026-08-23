@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.studomat.services
 
 import android.util.Log
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient

@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.menza.repository
 
 import android.util.Log
-import com.tstudioz.fax.fme.feature.menza.CamerasResult
+import com.tstudioz.fax.fme.feature.menza.utils.CamerasResult
 import com.tstudioz.fax.fme.feature.menza.service.CamerasServiceInterface
 import okhttp3.HttpUrl
 import org.jsoup.Jsoup

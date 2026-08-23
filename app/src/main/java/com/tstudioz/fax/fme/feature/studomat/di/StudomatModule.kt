@@ -6,7 +6,7 @@ import com.tstudioz.fax.fme.feature.studomat.repository.StudomatRepository
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatLoginService
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatLoginServiceInterface
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatService
-import com.tstudioz.fax.fme.feature.studomat.view.StudomatViewModel
+import com.tstudioz.fax.fme.feature.studomat.StudomatViewModel
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import com.tstudioz.fax.fme.networking.interceptors.ISVULoginInterceptor
 import okhttp3.OkHttpClient

@@ -1,14 +1,14 @@
 package com.tstudioz.fax.fme.feature.timetable.repository
 
-import com.tstudioz.fax.fme.database.models.Event
-import com.tstudioz.fax.fme.database.models.EventRoom
-import com.tstudioz.fax.fme.database.models.TimeTableInfo
+import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
+import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
 import com.tstudioz.fax.fme.feature.timetable.dao.TimeTableDao
-import com.tstudioz.fax.fme.feature.timetable.parseTimetable
-import com.tstudioz.fax.fme.feature.timetable.parseTimetableInfo
+import com.tstudioz.fax.fme.feature.timetable.utils.parseTimetable
+import com.tstudioz.fax.fme.feature.timetable.utils.parseTimetableInfo
 import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.services.interfaces.TimetableServiceInterface
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -9,11 +9,11 @@ import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
 import com.tstudioz.fax.fme.feature.iksica.models.StudentData
 import com.tstudioz.fax.fme.feature.iksica.models.StudentDataRoom
-import com.tstudioz.fax.fme.feature.iksica.parseDetaljeRacuna
-import com.tstudioz.fax.fme.feature.iksica.parseRacuni
-import com.tstudioz.fax.fme.feature.iksica.parseStudentInfo
+import com.tstudioz.fax.fme.feature.iksica.models.parseDetaljeRacuna
+import com.tstudioz.fax.fme.feature.iksica.models.parseRacuni
+import com.tstudioz.fax.fme.feature.iksica.models.parseStudentInfo
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaServiceInterface
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 
 class IksicaRepository(
     private val iksicaService: IksicaServiceInterface,

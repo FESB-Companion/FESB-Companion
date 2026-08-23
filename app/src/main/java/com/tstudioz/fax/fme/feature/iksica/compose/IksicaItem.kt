@@ -19,11 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.contentColors
-import com.tstudioz.fax.fme.compose.theme_dark_outline
-import com.tstudioz.fax.fme.feature.iksica.daysAgoText
+import com.tstudioz.fax.fme.theme.contentColors
+import com.tstudioz.fax.fme.theme.theme_dark_outline
+import com.tstudioz.fax.fme.feature.iksica.models.daysAgoText
 import com.tstudioz.fax.fme.feature.iksica.models.Receipt
-import com.tstudioz.fax.fme.feature.iksica.roundToTwo
+import com.tstudioz.fax.fme.feature.iksica.models.roundToTwo
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 

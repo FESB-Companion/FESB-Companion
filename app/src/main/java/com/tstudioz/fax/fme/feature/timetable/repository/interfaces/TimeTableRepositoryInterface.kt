@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.timetable.repository.interfaces
 
-import com.tstudioz.fax.fme.database.models.Event
-import com.tstudioz.fax.fme.database.models.TimeTableInfo
+import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
 import kotlinx.coroutines.flow.SharedFlow
 import java.time.LocalDate
 

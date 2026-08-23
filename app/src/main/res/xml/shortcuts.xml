@@ -9,7 +9,7 @@
         android:shortcutShortLabel="@string/timetable_quick">
         <intent
             android:action="raspored"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetClass="com.tstudioz.fax.fme.MainActivity"
             android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
     <shortcut
@@ -21,7 +21,7 @@
         android:shortcutShortLabel="@string/attend_quick">
         <intent
             android:action="prisutnost"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetClass="com.tstudioz.fax.fme.MainActivity"
             android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
     <shortcut
@@ -33,7 +33,7 @@
         android:shortcutShortLabel="@string/add_reminder_short">
         <intent
             android:action="podsjetnik"
-            android:targetClass="com.tstudioz.fax.fme.view.activities.MainActivity"
+            android:targetClass="com.tstudioz.fax.fme.MainActivity"
             android:targetPackage="com.tstudioz.fax.fme" />
     </shortcut>
 </shortcuts>

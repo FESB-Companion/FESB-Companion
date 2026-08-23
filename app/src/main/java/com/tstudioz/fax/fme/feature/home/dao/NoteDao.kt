@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
-import com.tstudioz.fax.fme.database.models.NoteRoom
+import com.tstudioz.fax.fme.feature.attendance.models.NoteRoom
 
 
 @Dao

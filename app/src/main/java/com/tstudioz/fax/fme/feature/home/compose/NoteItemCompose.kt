@@ -32,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.database.models.Note
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.feature.attendance.models.Note
 import com.tstudioz.fax.fme.feature.home.compose.NoteItemState.Default
 import com.tstudioz.fax.fme.feature.home.compose.NoteItemState.Edit
 import java.time.LocalDateTime

@@ -27,7 +27,7 @@ class SettingsActivity : AppCompatActivity() {
         routeToLoginListener()
 
         setContent {
-            SettingsCompose(router = router)
+            SettingsScreen(router = router)
         }
     }
 

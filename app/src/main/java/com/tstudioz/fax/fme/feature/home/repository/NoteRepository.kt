@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.home.repository
 
-import com.tstudioz.fax.fme.database.models.Note
-import com.tstudioz.fax.fme.database.models.NoteRoom
+import com.tstudioz.fax.fme.feature.attendance.models.Note
+import com.tstudioz.fax.fme.feature.attendance.models.NoteRoom
 import com.tstudioz.fax.fme.feature.home.dao.NoteDao
 
 class NoteRepository(private val noteDao: NoteDao) : NoteRepositoryInterface {
