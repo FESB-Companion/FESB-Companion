@@ -2,11 +2,9 @@ package com.tstudioz.fax.fme.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.tstudioz.fax.fme.user.models.UserRoom
-import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
-import com.tstudioz.fax.fme.feature.attendance.models.NoteRoom
 import com.tstudioz.fax.fme.feature.attendance.dao.AttendanceDao
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
+import com.tstudioz.fax.fme.feature.attendance.models.NoteRoom
 import com.tstudioz.fax.fme.feature.home.dao.NoteDao
 import com.tstudioz.fax.fme.feature.iksica.dao.IksicaDao
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
@@ -16,6 +14,8 @@ import com.tstudioz.fax.fme.feature.studomat.dao.StudomatDao
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatSubject
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.timetable.dao.TimeTableDao
+import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
+import com.tstudioz.fax.fme.user.models.UserRoom
 
 @Database(
     entities = [

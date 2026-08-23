@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -28,7 +29,6 @@ import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.theme.contentColors
 import java.time.YearMonth
 import java.time.format.TextStyle
-import androidx.compose.ui.platform.LocalLocale
 
 @Composable
 fun SimpleCalendarTitle(

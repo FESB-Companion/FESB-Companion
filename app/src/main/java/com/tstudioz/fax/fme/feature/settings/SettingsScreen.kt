@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.routing.SettingsRouter
 import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.theme.theme_dark_outline
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 import com.tstudioz.fax.fme.theme.theme_dark_surface
-import com.tstudioz.fax.fme.routing.SettingsRouter
 import org.koin.androidx.compose.koinViewModel
 
 val leftPadding = 10.dp

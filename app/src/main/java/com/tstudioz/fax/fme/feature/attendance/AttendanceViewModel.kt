@@ -11,8 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.attendance.repository.AttendanceRepositoryInterface
 import com.tstudioz.fax.fme.feature.attendance.utils.ShownSemester
-import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

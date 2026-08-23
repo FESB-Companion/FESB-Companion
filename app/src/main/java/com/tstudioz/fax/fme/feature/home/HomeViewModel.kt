@@ -11,14 +11,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.user.UserRepositoryInterface
-import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.attendance.models.Note
 import com.tstudioz.fax.fme.feature.home.models.WeatherDisplay
 import com.tstudioz.fax.fme.feature.home.repository.NoteRepositoryInterface
 import com.tstudioz.fax.fme.feature.home.repository.WeatherRepositoryInterface
+import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
+import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi

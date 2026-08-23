@@ -1,14 +1,14 @@
 package com.tstudioz.fax.fme.user
 
 import android.content.SharedPreferences
-import com.tstudioz.fax.fme.user.models.User
-import com.tstudioz.fax.fme.user.models.UserRepositoryResult
-import com.tstudioz.fax.fme.user.models.UserRoom
 import com.tstudioz.fax.fme.database.AppDatabase
 import com.tstudioz.fax.fme.feature.login.dao.UserDao
 import com.tstudioz.fax.fme.feature.login.services.UserServiceInterface
 import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import com.tstudioz.fax.fme.networking.session.SessionDelegateInterface
+import com.tstudioz.fax.fme.user.models.User
+import com.tstudioz.fax.fme.user.models.UserRepositoryResult
+import com.tstudioz.fax.fme.user.models.UserRoom
 import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey
 

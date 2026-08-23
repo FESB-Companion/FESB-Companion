@@ -9,8 +9,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.feature.settings.model.EmailModalModel
+import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.util.PreferenceHelper.get
 import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey

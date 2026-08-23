@@ -6,12 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.tstudioz.fax.fme.feature.menza.utils.MenzaResult
-import com.tstudioz.fax.fme.feature.menza.utils.menzaLocations
 import com.tstudioz.fax.fme.feature.menza.models.Menza
 import com.tstudioz.fax.fme.feature.menza.models.MenzaLocation
 import com.tstudioz.fax.fme.feature.menza.repository.CamerasRepositoryInterface
 import com.tstudioz.fax.fme.feature.menza.repository.MenzaRepositoryInterface
+import com.tstudioz.fax.fme.feature.menza.utils.MenzaResult
+import com.tstudioz.fax.fme.feature.menza.utils.menzaLocations
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers

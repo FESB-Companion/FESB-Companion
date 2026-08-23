@@ -37,12 +37,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.feature.attendance.compose.AttendanceItem
+import com.tstudioz.fax.fme.feature.attendance.utils.ShownSemester
 import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.theme.contentColors
 import com.tstudioz.fax.fme.theme.theme_dark_primaryContainer
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
-import com.tstudioz.fax.fme.feature.attendance.utils.ShownSemester
-import com.tstudioz.fax.fme.feature.attendance.compose.AttendanceItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 

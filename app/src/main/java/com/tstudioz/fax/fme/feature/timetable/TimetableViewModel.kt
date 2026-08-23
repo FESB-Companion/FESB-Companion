@@ -11,12 +11,12 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
 import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.utils.MonthData
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
+import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.util.PreferenceHelper.get
 import com.tstudioz.fax.fme.util.SPKey
 import kotlinx.coroutines.CoroutineExceptionHandler

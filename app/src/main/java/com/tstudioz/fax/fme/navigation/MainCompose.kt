@@ -23,7 +23,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.feature.attendance.AttendanceScreen
 import com.tstudioz.fax.fme.feature.attendance.AttendanceViewModel
 import com.tstudioz.fax.fme.feature.home.HomeScreen
@@ -32,8 +31,9 @@ import com.tstudioz.fax.fme.feature.iksica.IksicaScreen
 import com.tstudioz.fax.fme.feature.iksica.IksicaViewModel
 import com.tstudioz.fax.fme.feature.studomat.StudomatScreen
 import com.tstudioz.fax.fme.feature.studomat.StudomatViewModel
-import com.tstudioz.fax.fme.feature.timetable.TimetableViewModel
 import com.tstudioz.fax.fme.feature.timetable.TimetableScreen
+import com.tstudioz.fax.fme.feature.timetable.TimetableViewModel
+import com.tstudioz.fax.fme.theme.AppTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.compose.koinViewModel

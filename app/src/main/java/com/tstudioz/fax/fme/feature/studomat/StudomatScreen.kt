@@ -32,11 +32,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.currentStateAsState
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.studomatBlue
 import com.tstudioz.fax.fme.feature.studomat.compose.EmptyStudomatView
 import com.tstudioz.fax.fme.feature.studomat.compose.StudomatContent
 import com.tstudioz.fax.fme.feature.studomat.compose.WebViewScreen
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
+import com.tstudioz.fax.fme.theme.studomatBlue
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -62,7 +62,7 @@ fun StudomatScreen(studomatViewModel: StudomatViewModel, innerPaddingValues: Pad
     Scaffold(
         modifier = Modifier.pullRefresh(pullRefreshState),
         contentWindowInsets = WindowInsets(0.dp),
-        snackbarHost = { Box(Modifier.padding(innerPaddingValues)){ SnackbarHost(hostState = snackbarHostState) } }
+        snackbarHost = { Box(Modifier.padding(innerPaddingValues)) { SnackbarHost(hostState = snackbarHostState) } }
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun StudomatScreen(studomatViewModel: StudomatViewModel, innerPaddingValues: Pad
                     .zIndex(2f),
                 scale = true
             )
-            Column (Modifier.fillMaxSize()){
+            Column(Modifier.fillMaxSize()) {
                 Text(
                     text = stringResource(id = R.string.tab_studomat),
                     style = MaterialTheme.typography.displayMedium,

@@ -24,8 +24,8 @@ import androidx.lifecycle.compose.currentStateAsState
 import com.tbuonomo.viewpagerdotsindicator.compose.DotsIndicator
 import com.tbuonomo.viewpagerdotsindicator.compose.model.DotGraphic
 import com.tbuonomo.viewpagerdotsindicator.compose.type.BalloonIndicatorType
-import com.tstudioz.fax.fme.feature.menza.utils.menzaLocations
 import com.tstudioz.fax.fme.feature.menza.compose.ImageMeniView
+import com.tstudioz.fax.fme.feature.menza.utils.menzaLocations
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(ExperimentalMaterial3Api::class, InternalCoroutinesApi::class)

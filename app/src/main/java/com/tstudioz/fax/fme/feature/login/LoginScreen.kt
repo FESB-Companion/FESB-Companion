@@ -52,11 +52,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.feature.login.models.TextFieldModel
 import com.tstudioz.fax.fme.theme.theme_dark_errorContainer
 import com.tstudioz.fax.fme.theme.theme_dark_onErrorContainer
 import com.tstudioz.fax.fme.theme.theme_dark_onSurface
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
-import com.tstudioz.fax.fme.feature.login.models.TextFieldModel
 
 @Composable
 fun LoginScreen(

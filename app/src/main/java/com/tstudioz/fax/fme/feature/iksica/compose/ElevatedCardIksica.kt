@@ -145,7 +145,8 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             )
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.daily_support_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.dailySupport)
+                    id = R.string.iksica_balance,
+                    String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.dailySupport)
                 )
             )
             CardIksicaPopupRow(leftText = stringResource(R.string.oib_label), rightText = studentInfo.oib)
@@ -161,7 +162,8 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             CardIksicaPopupRow(leftText = stringResource(R.string.right_until_label), rightText = studentInfo.rightsTo)
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.card_balance_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.balance)
+                    id = R.string.iksica_balance,
+                    String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.balance)
                 ), divider = false
             )
         }

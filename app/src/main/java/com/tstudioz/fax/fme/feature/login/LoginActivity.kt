@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.routing.LoginRouter
+import com.tstudioz.fax.fme.theme.AppTheme
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

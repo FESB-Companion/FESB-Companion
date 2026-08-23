@@ -53,10 +53,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.contentColors
 import com.tstudioz.fax.fme.feature.home.compose.noRippleClickable
-import com.tstudioz.fax.fme.feature.iksica.models.IksicaData
-import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.feature.iksica.compose.BottomSheetIksica
 import com.tstudioz.fax.fme.feature.iksica.compose.CardIksicaPopupContent
 import com.tstudioz.fax.fme.feature.iksica.compose.ElevatedCardIksica
@@ -66,6 +63,9 @@ import com.tstudioz.fax.fme.feature.iksica.compose.IksicaViewState
 import com.tstudioz.fax.fme.feature.iksica.compose.NestedSheetState
 import com.tstudioz.fax.fme.feature.iksica.compose.PopupBox
 import com.tstudioz.fax.fme.feature.iksica.compose.rememberNestedSheetState
+import com.tstudioz.fax.fme.feature.iksica.models.IksicaData
+import com.tstudioz.fax.fme.feature.iksica.models.Receipt
+import com.tstudioz.fax.fme.theme.contentColors
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 

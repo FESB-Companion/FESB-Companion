@@ -1,9 +1,9 @@
 package com.tstudioz.fax.fme.util
 
-import com.tstudioz.fax.fme.theme.accentBlue
-import com.tstudioz.fax.fme.theme.accentRed
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.TimetableType
+import com.tstudioz.fax.fme.theme.accentBlue
+import com.tstudioz.fax.fme.theme.accentRed
 import java.time.LocalDateTime
 
 val testEvents = listOf(

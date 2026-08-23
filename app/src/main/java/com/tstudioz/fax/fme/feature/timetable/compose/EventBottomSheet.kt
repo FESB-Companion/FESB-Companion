@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.util.testEvents
 
 @Composable
