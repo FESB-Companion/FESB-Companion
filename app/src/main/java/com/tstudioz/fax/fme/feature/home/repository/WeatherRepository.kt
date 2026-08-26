@@ -34,7 +34,7 @@ class WeatherRepository(private val weatherNetworkService: WeatherServiceInterfa
                     return null
                 }
 
-                return WeatherDisplay(
+                WeatherDisplay(
                     "Split",
                     airTemperature,
                     summary

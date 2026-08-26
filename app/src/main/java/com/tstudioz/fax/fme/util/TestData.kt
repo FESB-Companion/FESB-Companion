@@ -1,8 +1,10 @@
 package com.tstudioz.fax.fme.util
 
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
+import com.tstudioz.fax.fme.feature.iksica.models.ReceiptItem
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
 import com.tstudioz.fax.fme.feature.iksica.models.StudentDataRoom
+import com.tstudioz.fax.fme.feature.studomat.models.Student
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatSubject
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.timetable.models.Event
@@ -144,6 +146,28 @@ val studomatYearInfoTestData = listOf(
         academicYear = "2024"
         href = "http://example.com/enrollment/2024"
     }
+)
+
+val studomatStudentData = Student(
+    name = "Ivan",
+    surname = "Horvat",
+    jmbag = "0234567890",
+    placeOfBirth = "Split",
+    citizenship = "Hrvatsko",
+    residenceType = "Prebivalište",
+    healthInsurance = "HZZO",
+    enrollmentYear = "2022",
+    parallelStudy = "Ne",
+    stipendija = "Ne",
+    adresaUMjestuPrebivanja = "Ulica Domovinskog rata 1, Split",
+    adresaUMmjestuStanovanja = "Ulica Ruđera Boškovića 10, Split",
+    email = "ivan.horvat@student.fesb.hr",
+    phoneNumber = "+385 91 123 4567",
+    study = "Računarstvo",
+    studyProgram = "Računarstvo",
+    studyYear = "3",
+    studyType = "Redovni",
+    status = "Aktivan"
 )
 
 // Monday of this week
@@ -411,6 +435,17 @@ val receiptsTestData = listOf(
         date = "01.10.2025",
         dateString = "1. listopada 2025.",
         time = "12:15",
+        receiptAmount = 3.48,
+        subsidizedAmount = 2.36,
+        paidAmount = 1.12,
+        authorised = "Ivan Horvat",
+        href = "https://example.com/receipts/1"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza FESB",
+        date = "01.10.2025",
+        dateString = "1. listopada 2025.",
+        time = "12:15",
         receiptAmount = 25.0,
         subsidizedAmount = 18.0,
         paidAmount = 7.0,
@@ -515,5 +550,50 @@ val receiptsTestData = listOf(
         paidAmount = 6.0,
         authorised = "Domagoj Živković",
         href = "https://example.com/receipts/10"
+    )
+)
+
+val singleReceiptData = listOf(
+    ReceiptItem(
+        articleName = "Grašak, mrkva, krumpir",
+        amount = 1,
+        price = 0.55,
+        total = 0.55,
+        subsidizedAmount = 0.39
+    ),
+    ReceiptItem(
+        articleName = "Salata od svježih krastavca",
+        amount = 1,
+        price = 0.37,
+        total = 0.37,
+        subsidizedAmount = 0.26
+    ),
+    ReceiptItem(
+        articleName = "Naranča",
+        amount = 2,
+        price = 0.36,
+        total = 0.36,
+        subsidizedAmount = 0.26
+    ),
+    ReceiptItem(
+        articleName = "Šnita kruha",
+        amount = 5,
+        price = 0.03,
+        total = 0.03,
+        subsidizedAmount = 0.02
+    ),
+    ReceiptItem(
+        articleName = "Panirani pileći file",
+        amount = 1,
+        price = 1.64,
+        total = 1.64,
+        subsidizedAmount = 1.17
+    ),
+    ReceiptItem(
+        articleName = "sok bistri nektar multivit., ud. voć.min.40% brick",
+        amount = 1,
+        price = 0.53,
+        total = 0.53,
+        subsidizedAmount = 0.26
     )
 )

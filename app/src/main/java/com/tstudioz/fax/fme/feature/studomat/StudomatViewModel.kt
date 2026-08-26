@@ -11,7 +11,7 @@ import com.tstudioz.fax.fme.feature.studomat.data.sortedByNameAndSemester
 import com.tstudioz.fax.fme.feature.studomat.models.Student
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
-import com.tstudioz.fax.fme.feature.studomat.repository.StudomatRepository
+import com.tstudioz.fax.fme.feature.studomat.repository.StudomatRepositoryInterface
 import com.tstudioz.fax.fme.feature.studomat.repository.models.StudomatRepositoryResult
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class StudomatViewModel(
     application: Application,
-    private val repository: StudomatRepository,
+    private val repository: StudomatRepositoryInterface,
 ) : AndroidViewModel(application) {
 
     val internetAvailable: LiveData<Boolean> = InternetConnectionObserver.get()

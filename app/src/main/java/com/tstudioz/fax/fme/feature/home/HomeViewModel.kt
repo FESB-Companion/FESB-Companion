@@ -16,7 +16,7 @@ import com.tstudioz.fax.fme.feature.home.models.WeatherDisplay
 import com.tstudioz.fax.fme.feature.home.repository.NoteRepositoryInterface
 import com.tstudioz.fax.fme.feature.home.repository.WeatherRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.models.Event
-import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
+import com.tstudioz.fax.fme.feature.timetable.repository.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.networking.InternetConnectionObserver
 import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import kotlinx.coroutines.CoroutineExceptionHandler

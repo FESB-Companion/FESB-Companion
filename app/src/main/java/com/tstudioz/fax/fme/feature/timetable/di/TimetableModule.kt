@@ -3,7 +3,7 @@ package com.tstudioz.fax.fme.feature.timetable.di
 import com.tstudioz.fax.fme.database.AppDatabase
 import com.tstudioz.fax.fme.feature.timetable.dao.TimeTableDao
 import com.tstudioz.fax.fme.feature.timetable.repository.TimeTableRepository
-import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
+import com.tstudioz.fax.fme.feature.timetable.repository.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.services.TimetableService
 import com.tstudioz.fax.fme.feature.timetable.services.interfaces.TimetableServiceInterface
 import org.koin.core.qualifier.named

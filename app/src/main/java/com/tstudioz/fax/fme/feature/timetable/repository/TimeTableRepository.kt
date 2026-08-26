@@ -4,7 +4,6 @@ import com.tstudioz.fax.fme.feature.timetable.dao.TimeTableDao
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
 import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
-import com.tstudioz.fax.fme.feature.timetable.repository.interfaces.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.feature.timetable.services.interfaces.TimetableServiceInterface
 import com.tstudioz.fax.fme.feature.timetable.utils.parseTimetable
 import com.tstudioz.fax.fme.feature.timetable.utils.parseTimetableInfo

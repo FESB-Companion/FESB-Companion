@@ -51,3 +51,7 @@ class ParseAttendance {
         return attendanceUrls
     }
 }
+
+
+fun List<List<AttendanceEntry>>.sortedByClassAndSemester() = sortedBy { it.firstOrNull()?.subject }
+    .sortedBy { it.firstOrNull()?.semester }

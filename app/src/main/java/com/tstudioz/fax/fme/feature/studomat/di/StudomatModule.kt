@@ -1,9 +1,12 @@
 package com.tstudioz.fax.fme.feature.studomat.di
 
+import com.tstudioz.fax.fme.BuildConfig
 import com.tstudioz.fax.fme.database.AppDatabase
 import com.tstudioz.fax.fme.feature.studomat.StudomatViewModel
 import com.tstudioz.fax.fme.feature.studomat.dao.StudomatDao
+import com.tstudioz.fax.fme.feature.studomat.repository.MockStudomatRepository
 import com.tstudioz.fax.fme.feature.studomat.repository.StudomatRepository
+import com.tstudioz.fax.fme.feature.studomat.repository.StudomatRepositoryInterface
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatLoginService
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatLoginServiceInterface
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatService
@@ -20,7 +23,13 @@ val studomatModule = module {
     single<StudomatLoginServiceInterface> { StudomatLoginService(get()) }
     single<OkHttpClient>(named("clientStudomat")) { provideISVUPortalClient(get(), get()) }
     single { StudomatService(get(named("clientStudomat"))) }
-    single { StudomatRepository(get(), get()) }
+    single<StudomatRepositoryInterface> {
+        if (BuildConfig.DEBUG) {
+            MockStudomatRepository(get())
+        } else {
+            StudomatRepository(get(), get())
+        }
+    }
     single { getStudomatDao(get()) }
     viewModel { StudomatViewModel(get(), get()) }
 }

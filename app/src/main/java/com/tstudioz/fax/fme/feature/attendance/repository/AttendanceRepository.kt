@@ -5,6 +5,7 @@ import com.tstudioz.fax.fme.feature.attendance.dao.AttendanceDao
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.attendance.services.AttendanceServiceInterface
 import com.tstudioz.fax.fme.feature.attendance.utils.ParseAttendance
+import com.tstudioz.fax.fme.feature.attendance.utils.sortedByClassAndSemester
 import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -76,6 +77,3 @@ class AttendanceRepository(
     }
 
 }
-
-fun List<List<AttendanceEntry>>.sortedByClassAndSemester() = sortedBy { it.firstOrNull()?.subject }
-    .sortedBy { it.firstOrNull()?.semester }

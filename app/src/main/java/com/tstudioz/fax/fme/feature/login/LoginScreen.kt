@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.feature.login.models.TextFieldModel
+import com.tstudioz.fax.fme.theme.AppTheme
 import com.tstudioz.fax.fme.theme.theme_dark_errorContainer
 import com.tstudioz.fax.fme.theme.theme_dark_onErrorContainer
 import com.tstudioz.fax.fme.theme.theme_dark_onSurface
@@ -224,11 +225,13 @@ fun ButtonCircularLoading(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(
-        MutableLiveData(false),
-        SnackbarHostState(),
-        MutableLiveData(""),
-        MutableLiveData(""),
-        MutableLiveData(true),
-        {})
+    AppTheme {
+        LoginScreen(
+            MutableLiveData(false),
+            SnackbarHostState(),
+            MutableLiveData(""),
+            MutableLiveData(""),
+            MutableLiveData(true),
+            {})
+    }
 }
