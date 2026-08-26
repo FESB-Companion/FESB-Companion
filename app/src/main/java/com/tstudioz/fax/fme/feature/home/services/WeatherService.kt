@@ -15,9 +15,9 @@ class WeatherService(private val client: OkHttpClient) : WeatherServiceInterface
             .build()
 
         val response: Response = client.newCall(request).execute()
-        val value = response.body?.string()
+        val value = response.body.string()
 
-        if (!response.isSuccessful || value.isNullOrEmpty()) {
+        if (!response.isSuccessful || value.isEmpty()) {
             return NetworkServiceResult.WeatherResult.Failure(Throwable("Failed to fetch weather"))
         }
 

@@ -15,7 +15,7 @@ class AttendanceService(
             .build()
         val response = client.newCall(request).execute()
         val success = response.isSuccessful
-        val data = response.body?.string() ?: ""
+        val data = response.body.string()
         response.close()
 
         return if (success) {
@@ -32,8 +32,7 @@ class AttendanceService(
             .build()
         val response = client.newCall(request).execute()
         val success = response.isSuccessful
-        val data = response.body?.string() ?: ""
-        response.close()
+        val data = response.body.string()
 
         if (!success) {
             return NetworkServiceResult.AttendanceFetchResult.Failure(Throwable("Failed to fetch attendance details"))

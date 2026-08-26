@@ -24,7 +24,7 @@ class CamerasService(private val client: OkHttpClient) : CamerasServiceInterface
             return CamerasResult.GetCamerasResult.Failure
         }
 
-        val doc = response.body?.string() ?: ""
+        val doc = response.body.string()
         response.close()
 
         return CamerasResult.GetCamerasResult.Success(doc)

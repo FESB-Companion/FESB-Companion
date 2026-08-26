@@ -24,7 +24,7 @@ class UserService(private val client: OkHttpClient) : UserServiceInterface {
 
         val response = client.newCall(request).execute()
         val url = response.request.url
-        val nameOfUser = Jsoup.parse(response.body?.string() ?: "").select(".welcomeBack h2").text()
+        val nameOfUser = Jsoup.parse(response.body.string()).select(".welcomeBack h2").text()
 
         response.close()
 
