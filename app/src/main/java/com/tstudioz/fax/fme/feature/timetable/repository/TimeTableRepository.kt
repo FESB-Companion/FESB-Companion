@@ -73,10 +73,6 @@ class TimeTableRepository(
         }
     }
 
-    override suspend fun getCachedEvents(): List<Event> {
-        return timeTableDao.getEvents().map { Event(it) }
-    }
-
     private fun observeEventsFromCache() {
         CoroutineScope(Dispatchers.IO).launch {
             timeTableDao.getEventsAsync().collect { events ->
@@ -85,7 +81,7 @@ class TimeTableRepository(
         }
     }
 
-    private suspend fun insert(classes: List<Event>) {
+    private fun insert(classes: List<Event>) {
         timeTableDao.deleteAll()
         timeTableDao.insert(classes.map { EventRoom(it) })
     }

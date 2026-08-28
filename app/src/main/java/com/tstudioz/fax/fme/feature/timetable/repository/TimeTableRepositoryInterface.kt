@@ -13,6 +13,4 @@ interface TimeTableRepositoryInterface {
 
     suspend fun fetchTimeTableCalendar(startDate: String, endDate: String): Map<LocalDate, TimeTableInfo>
 
-    suspend fun getCachedEvents(): List<Event>
-
 }
