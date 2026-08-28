@@ -46,6 +46,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
+            buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "false")
         }
 
         if (localPropFileExists) {
@@ -54,6 +55,7 @@ android {
                 isShrinkResources = true
                 proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 signingConfig = signingConfigs.getByName("releaseDebug")
+                buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "false")
             }
         }
 
@@ -62,6 +64,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "true")
         }
     }
 

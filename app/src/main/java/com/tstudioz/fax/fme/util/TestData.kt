@@ -1,5 +1,6 @@
 package com.tstudioz.fax.fme.util
 
+import androidx.compose.ui.graphics.toArgb
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptItem
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
@@ -10,6 +11,9 @@ import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
 import com.tstudioz.fax.fme.feature.timetable.models.TimetableType
+import com.tstudioz.fax.fme.theme.accentBlue
+import com.tstudioz.fax.fme.theme.accentGreen
+import com.tstudioz.fax.fme.theme.accentRed
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -184,7 +188,8 @@ val eventsTestData = listOf(
             id = "532059",
             name = "Kriptografija i mrežna sigurnost",
             shortName = "KIMS",
-            colorId = -65536, // bright red
+            color = accentRed,
+            colorId = accentRed.toArgb(),
             professor = "Čagalj Mario",
             eventType = TimetableType.PREDAVANJE,
             groups = "",
@@ -199,7 +204,7 @@ val eventsTestData = listOf(
             id = "534198",
             name = "Metode optimizacije",
             shortName = "MO",
-            colorId = -16776961, // bright blue
+            colorId = accentBlue.toArgb(), // bright blue
             professor = "Bašić Martina",
             eventType = TimetableType.LABORATORIJSKA_VJEZBA,
             groups = "Grupa 1,",
@@ -214,7 +219,7 @@ val eventsTestData = listOf(
             id = "532144",
             name = "Podržano strojno učenje",
             shortName = "PSU",
-            colorId = -16711936, // bright green
+            colorId = accentGreen.toArgb(), // bright green
             professor = "Vasilj Josip",
             eventType = TimetableType.PREDAVANJE,
             groups = "",
@@ -229,7 +234,7 @@ val eventsTestData = listOf(
             id = "532084",
             name = "Metode optimizacije",
             shortName = "MO",
-            colorId = -256, // bright yellow
+            colorId = accentBlue.toArgb(), // bright yellow
             professor = "Marasović Jadranka",
             eventType = TimetableType.PREDAVANJE,
             groups = "",
@@ -244,7 +249,7 @@ val eventsTestData = listOf(
             id = "532120",
             name = "IP komunikacije",
             shortName = "IK",
-            colorId = -65536, // bright red
+            colorId = accentRed.toArgb(), // bright red
             professor = "Russo Mladen",
             eventType = TimetableType.PREDAVANJE,
             groups = "",
@@ -259,7 +264,7 @@ val eventsTestData = listOf(
             id = "538989",
             name = "Podržano strojno učenje",
             shortName = "PSU",
-            colorId = -16711936, // bright green
+            colorId = accentGreen.toArgb(), // bright green
             professor = "Vasilj Josip",
             eventType = TimetableType.LABORATORIJSKA_VJEZBA,
             groups = "Grupa 1,",
@@ -274,7 +279,7 @@ val eventsTestData = listOf(
             id = "535595",
             name = "Jezici i prevoditelji",
             shortName = "JIP",
-            colorId = -65536, // bright red
+            colorId = accentRed.toArgb(), // bright red
             professor = "Sikora Marjan",
             eventType = TimetableType.LABORATORIJSKA_VJEZBA,
             groups = "Grupa 1,",
@@ -289,7 +294,7 @@ val eventsTestData = listOf(
             id = "535336",
             name = "IP komunikacije",
             shortName = "IK",
-            colorId = -16711936, // bright green
+            colorId = accentGreen.toArgb(), // bright green
             professor = "Meter Davor",
             eventType = TimetableType.LABORATORIJSKA_VJEZBA,
             groups = "Grupa 1,",

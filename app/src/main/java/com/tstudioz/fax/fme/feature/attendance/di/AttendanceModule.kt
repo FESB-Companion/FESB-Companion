@@ -20,7 +20,7 @@ val attendanceModule = module {
     single<AttendanceServiceInterface> { AttendanceService(get(named("FESBPortalClient"))) }
     single<AttendanceDao> { getAttendanceDao(get()) }
     single<AttendanceRepositoryInterface> {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.MOCK_REPOS_ENABLED) {
             MockAttendanceRepository(get())
         } else {
             AttendanceRepository(get(), get())

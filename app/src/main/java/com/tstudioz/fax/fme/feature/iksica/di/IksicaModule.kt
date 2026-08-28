@@ -27,7 +27,7 @@ val iksicaModule = module {
     single<OkHttpClient>(named("ISSPPortalClient")) { provideISSPPortalClient(get(), get()) }
     single<IksicaServiceInterface> { IksicaService(get(named("ISSPPortalClient"))) }
     single<IksicaRepositoryInterface> {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.MOCK_REPOS_ENABLED) {
             MockIksicaRepository(get())
         } else {
             IksicaRepository(get(), get())

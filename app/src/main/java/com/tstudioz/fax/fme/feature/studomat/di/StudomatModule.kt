@@ -24,7 +24,7 @@ val studomatModule = module {
     single<OkHttpClient>(named("clientStudomat")) { provideISVUPortalClient(get(), get()) }
     single { StudomatService(get(named("clientStudomat"))) }
     single<StudomatRepositoryInterface> {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.MOCK_REPOS_ENABLED) {
             MockStudomatRepository(get())
         } else {
             StudomatRepository(get(), get())
