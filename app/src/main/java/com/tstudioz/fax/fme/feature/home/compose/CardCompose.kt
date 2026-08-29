@@ -17,16 +17,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.lust
-import com.tstudioz.fax.fme.compose.meniColor
-import com.tstudioz.fax.fme.feature.home.view.HomeViewModel
-import com.tstudioz.fax.fme.feature.home.view.sidePadding
+import com.tstudioz.fax.fme.feature.home.HomeViewModel
+import com.tstudioz.fax.fme.feature.home.sidePadding
 import com.tstudioz.fax.fme.feature.iksica.compose.angledGradientBackground
+import com.tstudioz.fax.fme.theme.lust
+import com.tstudioz.fax.fme.theme.meniColor
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
-fun CardsCompose(openMenza: ()-> Unit, homeViewModel: HomeViewModel) {
+fun CardsCompose(openMenza: () -> Unit, homeViewModel: HomeViewModel) {
     Row(Modifier.padding(horizontal = sidePadding)) {
         Box(
             Modifier

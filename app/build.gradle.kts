@@ -1,24 +1,25 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
+
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
     kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "com.tstudioz.fax.fme"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 37
         versionName = "4.0.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    namespace = "com.tstudioz.fax.fme"
 
     val localPropFileExists = File(rootDir, "local.properties").isFile
 
@@ -43,15 +44,18 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
+            buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "false")
         }
 
         if (localPropFileExists) {
             create("releaseDebug") {
                 isMinifyEnabled = true
-                proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+                isShrinkResources = true
+                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 signingConfig = signingConfigs.getByName("releaseDebug")
+                buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "false")
             }
         }
 
@@ -60,29 +64,24 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "true")
         }
     }
-
-    namespace = "com.tstudioz.fax.fme"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    viewBinding {
-        enable = true
-    }
-    dataBinding {
-        enable = true
-    }
     buildFeatures {
         buildConfig = true
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 
@@ -103,7 +102,6 @@ dependencies {
     implementation(libs.browser)
     implementation(libs.okhttp)
     implementation(libs.jsoup)
-    implementation(libs.particlesdrawable.library)
     implementation(libs.persistentcookiejar)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
@@ -129,6 +127,7 @@ dependencies {
     implementation(libs.ui.text.google.fonts)
     implementation(libs.dotsindicator)
     implementation(libs.glide)
+    implementation(libs.androidx.foundation)
 }
 
 configurations.all {
@@ -146,13 +145,16 @@ allprojects {
 }
 
 tasks.register("getBuildVersionNumber") {
+    description = "getBuildVersionNumber"
     println(android.defaultConfig.versionCode)
 }
 
 tasks.register("getNextBuildVersionNumber") {
+    description = "getNextBuildVersionNumber"
     println(android.defaultConfig.versionCode?.plus(1) ?: -1)
 }
 
 tasks.register("getAppVersionName") {
+    description = "getAppVersionName"
     println(android.defaultConfig.versionName)
 }

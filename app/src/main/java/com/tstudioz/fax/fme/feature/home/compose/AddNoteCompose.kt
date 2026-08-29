@@ -42,8 +42,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.database.models.Note
+import com.tstudioz.fax.fme.feature.attendance.models.Note
+import com.tstudioz.fax.fme.theme.AppTheme
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -53,14 +53,14 @@ fun AddNoteCompose(insertNote: (note: Note) -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val iconSize = Dp(MaterialTheme.typography.bodyMedium.lineHeight.value)
     val height = 28.dp
-    var measuredHeight: MutableIntState = remember { mutableIntStateOf(0) }
+    val measuredHeight: MutableIntState = remember { mutableIntStateOf(0) }
 
     Spacer(Modifier.height(8.dp))
     if (!openDialog.value) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .onGloballyPositioned{ measuredHeight.intValue = it.size.height }
+                .onGloballyPositioned { measuredHeight.intValue = it.size.height }
                 .fillMaxWidth()
                 .padding(vertical = 2.dp)
                 .clip(RoundedCornerShape(20.dp))
@@ -160,7 +160,7 @@ fun AddNoteCompose(insertNote: (note: Note) -> Unit) {
 @Preview
 @Composable
 fun AddNotePreview() {
-    AppTheme() {
+    AppTheme {
         Surface {
             AddNoteCompose { }
         }

@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.menza.repository
 
-import com.tstudioz.fax.fme.feature.menza.MenzaLocationType
-import com.tstudioz.fax.fme.feature.menza.MenzaResult
+import com.tstudioz.fax.fme.feature.menza.utils.MenzaLocationType
+import com.tstudioz.fax.fme.feature.menza.utils.MenzaResult
 
 interface MenzaRepositoryInterface {
 

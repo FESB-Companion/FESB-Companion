@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.studomat.services
 
 import android.util.Log
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -21,11 +21,11 @@ class StudomatLoginService(private val client: OkHttpClient) : StudomatLoginServ
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string()?.let { Jsoup.parse(it) }
+        val doc = response.body.string().let { Jsoup.parse(it) }
         val isSuccessful = response.isSuccessful
         response.close()
 
-        samlRequest = doc?.selectFirst("input[name=SAMLRequest]")?.attr("value").toString()
+        samlRequest = doc.selectFirst("input[name=SAMLRequest]")?.attr("value").toString()
 
         return if (isSuccessful && samlRequest != "") {
             Log.d("StudomatService", "getSamlRequest: $samlRequest")
@@ -46,11 +46,11 @@ class StudomatLoginService(private val client: OkHttpClient) : StudomatLoginServ
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string()?.let { Jsoup.parse(it) }
+        val doc = response.body.string().let { Jsoup.parse(it) }
         val isSuccessful = response.isSuccessful
         response.close()
 
-        authState = doc?.selectFirst("form.login-form")?.attr("action")?.substringAfter("AuthState=").toString()
+        authState = doc.selectFirst("form.login-form")?.attr("action")?.substringAfter("AuthState=").toString()
 
         return if (isSuccessful && authState != "") {
             Log.d("StudomatService", "sendSamlResponseToAAIEDU: $authState")
@@ -78,11 +78,11 @@ class StudomatLoginService(private val client: OkHttpClient) : StudomatLoginServ
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string()?.let { Jsoup.parse(it) }
+        val doc = response.body.string().let { Jsoup.parse(it) }
         val isSuccessful = response.isSuccessful
         response.close()
 
-        samlResponseEncrypted = doc?.selectFirst("input[name=SAMLResponse]")?.attr("value").toString()
+        samlResponseEncrypted = doc.selectFirst("input[name=SAMLResponse]")?.attr("value").toString()
 
         return if (isSuccessful && samlResponseEncrypted != "") {
             Log.d("StudomatService", "getSamlResponse: $samlResponseEncrypted")
@@ -105,11 +105,11 @@ class StudomatLoginService(private val client: OkHttpClient) : StudomatLoginServ
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string()?.let { Jsoup.parse(it) }
+        val doc = response.body.string().let { Jsoup.parse(it) }
         val isSuccessful = response.isSuccessful
         response.close()
 
-        samlResponseDecrypted = doc?.selectFirst("input[name=SAMLResponse]")?.attr("value").toString()
+        samlResponseDecrypted = doc.selectFirst("input[name=SAMLResponse]")?.attr("value").toString()
 
         return if (isSuccessful && samlResponseDecrypted != "") {
             Log.d("StudomatService", "sendSAMLToDecrypt: $samlResponseDecrypted")

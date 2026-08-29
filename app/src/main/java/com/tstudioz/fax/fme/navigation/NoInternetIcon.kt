@@ -1,8 +1,10 @@
 package com.tstudioz.fax.fme.navigation
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,20 +25,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.theme.AppTheme
 
 @Composable
 fun NoInternetIcon() {
     var expand by remember { mutableStateOf(false) }
-    var modifier = if (expand) Modifier
-    else Modifier.width(56.dp)
     FloatingActionButton(
         onClick = { expand = !expand },
         containerColor = MaterialTheme.colorScheme.inverseSurface,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        modifier = modifier
+        modifier = Modifier
+            .then(
+                if (expand) Modifier
+                else Modifier.width(56.dp)
+            )
             .height(56.dp)
             .padding(8.dp)
             .animateContentSize(),
@@ -60,6 +67,22 @@ fun NoInternetIcon() {
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun NoInternetIconPreview() {
+    AppTheme {
+        Scaffold(
+            floatingActionButton = { NoInternetIcon() }
+        ) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            )
         }
     }
 }

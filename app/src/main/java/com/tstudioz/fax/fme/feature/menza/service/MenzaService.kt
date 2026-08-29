@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.menza.service
 
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -22,11 +22,11 @@ class MenzaService(private val client: OkHttpClient) : MenzaServiceInterface {
             .build()
 
         val response: Response = client.newCall(request).execute()
-        val data = response.body?.string()
+        val data = response.body.string()
         val isSuccessful = response.isSuccessful
         response.close()
 
-        return if (!isSuccessful || data.isNullOrEmpty()) {
+        return if (!isSuccessful || data.isEmpty()) {
             NetworkServiceResult.MenzaResult.Failure(Throwable("Failed to fetch menza details."))
         } else {
             NetworkServiceResult.MenzaResult.Success(data)

@@ -1,6 +1,7 @@
 package com.tstudioz.fax.fme.feature.home.di
 
 import com.tstudioz.fax.fme.database.AppDatabase
+import com.tstudioz.fax.fme.feature.home.HomeViewModel
 import com.tstudioz.fax.fme.feature.home.dao.NoteDao
 import com.tstudioz.fax.fme.feature.home.repository.NoteRepository
 import com.tstudioz.fax.fme.feature.home.repository.NoteRepositoryInterface
@@ -8,7 +9,6 @@ import com.tstudioz.fax.fme.feature.home.repository.WeatherRepository
 import com.tstudioz.fax.fme.feature.home.repository.WeatherRepositoryInterface
 import com.tstudioz.fax.fme.feature.home.services.WeatherService
 import com.tstudioz.fax.fme.feature.home.services.WeatherServiceInterface
-import com.tstudioz.fax.fme.feature.home.view.HomeViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.viewModel

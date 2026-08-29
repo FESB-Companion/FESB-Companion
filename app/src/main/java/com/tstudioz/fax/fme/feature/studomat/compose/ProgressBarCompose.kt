@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tstudioz.fax.fme.compose.theme_dark_secondaryContainer
+import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 
 @Composable
 fun ProgressBarCompose(passed: Int, total: Int) {

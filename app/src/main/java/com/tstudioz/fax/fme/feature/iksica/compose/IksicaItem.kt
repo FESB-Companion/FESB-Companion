@@ -18,18 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.accentBlue
-import com.tstudioz.fax.fme.compose.contentColors
-import com.tstudioz.fax.fme.compose.theme_dark_surface
-import com.tstudioz.fax.fme.compose.greyishWhite
-import com.tstudioz.fax.fme.compose.theme_dark_outline
-import com.tstudioz.fax.fme.compose.theme_dark_outlineVariant
-import com.tstudioz.fax.fme.compose.theme_dark_primaryContainer
-import com.tstudioz.fax.fme.feature.iksica.daysAgoText
 import com.tstudioz.fax.fme.feature.iksica.models.Receipt
-import com.tstudioz.fax.fme.feature.iksica.roundToTwo
+import com.tstudioz.fax.fme.feature.iksica.models.daysAgoText
+import com.tstudioz.fax.fme.feature.iksica.models.roundToTwo
+import com.tstudioz.fax.fme.theme.contentColors
+import com.tstudioz.fax.fme.theme.theme_dark_outline
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -64,7 +58,11 @@ fun IksicaItem(receipt: Receipt, onClick: () -> Unit) {
                 val daysAgo = ChronoUnit.DAYS.between(receipt.date, today).daysAgoText(LocalContext.current)
                 Text(daysAgo, color = MaterialTheme.contentColors.tertiary, style = MaterialTheme.typography.bodySmall)
                 Spacer(modifier = Modifier.width(2.dp))
-                Text(receipt.time, color = MaterialTheme.contentColors.tertiary, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    receipt.time,
+                    color = MaterialTheme.contentColors.tertiary,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }

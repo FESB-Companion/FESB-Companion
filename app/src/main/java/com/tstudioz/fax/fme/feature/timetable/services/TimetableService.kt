@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.timetable.services
 
 import com.tstudioz.fax.fme.feature.timetable.services.interfaces.TimetableServiceInterface
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -26,12 +26,12 @@ class TimetableService(private val client: OkHttpClient) : TimetableServiceInter
             .build()
 
         val response: Response = client.newCall(request).execute()
-        val value = response.body?.string()
+        val value = response.body.string()
         val success = response.isSuccessful
 
         response.close()
 
-        if (!success || value.isNullOrEmpty()) {
+        if (!success || value.isEmpty()) {
             return NetworkServiceResult.TimeTableResult.Failure(Throwable("Failed to fetch schedule"))
         }
 
@@ -53,12 +53,12 @@ class TimetableService(private val client: OkHttpClient) : TimetableServiceInter
             .build()
 
         val response: Response = client.newCall(request).execute()
-        val value = response.body?.string()
+        val value = response.body.string()
         val success = response.isSuccessful
 
         response.close()
 
-        if (!success || value.isNullOrEmpty()) {
+        if (!success || value.isEmpty()) {
             return NetworkServiceResult.TimeTableResult.Failure(Throwable("Failed to fetch schedule"))
         }
 

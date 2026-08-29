@@ -22,12 +22,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.theme_dark_surface
-import com.tstudioz.fax.fme.compose.accentRed
-import com.tstudioz.fax.fme.compose.theme_dark_primaryContainer
-import com.tstudioz.fax.fme.compose.accentGreen
-import com.tstudioz.fax.fme.compose.contentColors
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.theme.accentGreen
+import com.tstudioz.fax.fme.theme.accentRed
+import com.tstudioz.fax.fme.theme.contentColors
+import com.tstudioz.fax.fme.theme.theme_dark_primaryContainer
+import com.tstudioz.fax.fme.theme.theme_dark_surface
 
 
 @Composable
@@ -107,25 +108,28 @@ fun AttendanceProgressBar(
 @Preview
 @Composable
 fun PreviewAttendanceItem() {
-    val attendanceItems = listOf(
-        AttendanceEntry(
-        ).apply {
-            subject = "Class 1"
-            type = "Type 1"
-            total = 10
-            attended = 5
-            absent = 2
-            required = 8
-        },
-        AttendanceEntry(
-        ).apply {
-            subject = "Class 1"
-            type = "Type 2"
-            total = 10
-            attended = 5
-            absent = 2
-            required = 8
-        }
-    )
-    AttendanceItem(attendanceItems)
+    AppTheme {
+        AttendanceItem(
+            listOf(
+                AttendanceEntry(
+                ).apply {
+                    subject = "Ime predmeta"
+                    type = "Predavanja"
+                    total = 10
+                    attended = 5
+                    absent = 2
+                    required = 8
+                },
+                AttendanceEntry(
+                ).apply {
+                    subject = "Ime predmeta"
+                    type = "Auditorne vježbe"
+                    total = 12
+                    attended = 5
+                    absent = 2
+                    required = 9
+                }
+            )
+        )
+    }
 }
