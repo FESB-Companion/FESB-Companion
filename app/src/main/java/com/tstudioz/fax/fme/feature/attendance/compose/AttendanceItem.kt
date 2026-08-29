@@ -113,8 +113,8 @@ fun PreviewAttendanceItem() {
             listOf(
                 AttendanceEntry(
                 ).apply {
-                    subject = "Class 1"
-                    type = "Type 1"
+                    subject = "Ime predmeta"
+                    type = "Predavanja"
                     total = 10
                     attended = 5
                     absent = 2
@@ -122,12 +122,12 @@ fun PreviewAttendanceItem() {
                 },
                 AttendanceEntry(
                 ).apply {
-                    subject = "Class 1"
-                    type = "Type 2"
-                    total = 10
+                    subject = "Ime predmeta"
+                    type = "Auditorne vježbe"
+                    total = 12
                     attended = 5
                     absent = 2
-                    required = 8
+                    required = 9
                 }
             )
         )
