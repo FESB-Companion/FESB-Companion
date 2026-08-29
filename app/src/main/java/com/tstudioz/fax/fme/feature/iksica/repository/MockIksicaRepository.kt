@@ -7,9 +7,9 @@ import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptRoom
 import com.tstudioz.fax.fme.feature.iksica.models.StudentData
 import com.tstudioz.fax.fme.feature.iksica.models.StudentDataRoom
-import com.tstudioz.fax.fme.util.receiptsTestData
-import com.tstudioz.fax.fme.util.singleReceiptData
-import com.tstudioz.fax.fme.util.studentDataTestData
+import com.tstudioz.fax.fme.testStuff.receiptsTestData
+import com.tstudioz.fax.fme.testStuff.singleReceiptData
+import com.tstudioz.fax.fme.testStuff.studentDataTestData
 
 class MockIksicaRepository(
     private val iksicaDao: IksicaDao,

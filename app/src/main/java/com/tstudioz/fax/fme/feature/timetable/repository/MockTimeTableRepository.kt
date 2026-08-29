@@ -4,7 +4,7 @@ import com.tstudioz.fax.fme.feature.timetable.dao.TimeTableDao
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.EventRoom
 import com.tstudioz.fax.fme.feature.timetable.models.TimeTableInfo
-import com.tstudioz.fax.fme.util.newTestEvents
+import com.tstudioz.fax.fme.testStuff.newTestEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

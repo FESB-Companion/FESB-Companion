@@ -5,9 +5,9 @@ import com.tstudioz.fax.fme.feature.studomat.data.sortedByNameAndSemester
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.studomat.repository.models.StudomatRepositoryResult
-import com.tstudioz.fax.fme.util.studomatStudentData
-import com.tstudioz.fax.fme.util.studomatSubjectTestData
-import com.tstudioz.fax.fme.util.studomatYearInfoTestData
+import com.tstudioz.fax.fme.testStuff.studomatStudentData
+import com.tstudioz.fax.fme.testStuff.studomatSubjectTestData
+import com.tstudioz.fax.fme.testStuff.studomatYearInfoTestData
 
 class MockStudomatRepository(
     private val studomatDao: StudomatDao,

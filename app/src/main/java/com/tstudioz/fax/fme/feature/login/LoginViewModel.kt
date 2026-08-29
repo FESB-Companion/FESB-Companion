@@ -15,12 +15,12 @@ import com.tstudioz.fax.fme.util.PreferenceHelper.get
 import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey
 import com.tstudioz.fax.fme.util.SingleLiveEvent
-import com.tstudioz.fax.fme.util.attendanceTestData
-import com.tstudioz.fax.fme.util.eventsTestData
-import com.tstudioz.fax.fme.util.receiptsTestData
-import com.tstudioz.fax.fme.util.studentDataTestData
-import com.tstudioz.fax.fme.util.studomatSubjectTestData
-import com.tstudioz.fax.fme.util.studomatYearInfoTestData
+import com.tstudioz.fax.fme.testStuff.attendanceTestData
+import com.tstudioz.fax.fme.testStuff.eventsTestData
+import com.tstudioz.fax.fme.testStuff.receiptsTestData
+import com.tstudioz.fax.fme.testStuff.studentDataTestData
+import com.tstudioz.fax.fme.testStuff.studomatSubjectTestData
+import com.tstudioz.fax.fme.testStuff.studomatYearInfoTestData
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -47,7 +47,7 @@ class LoginViewModel(
         private set
 
     private val handler = CoroutineExceptionHandler { _, exception ->
-        showSnackbar(application.getString(R.string.login_error_generic))
+        showSnackbar(exception.message ?: application.getString(R.string.login_error_generic))
         showLoading.postValue(false)
     }
 

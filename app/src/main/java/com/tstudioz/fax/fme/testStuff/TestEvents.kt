@@ -1,4 +1,4 @@
-package com.tstudioz.fax.fme.util
+package com.tstudioz.fax.fme.testStuff
 
 import com.tstudioz.fax.fme.feature.timetable.models.Event
 import com.tstudioz.fax.fme.feature.timetable.models.Recurring

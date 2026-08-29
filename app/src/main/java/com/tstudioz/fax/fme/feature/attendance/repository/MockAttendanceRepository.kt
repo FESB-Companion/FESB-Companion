@@ -4,7 +4,7 @@ import com.tstudioz.fax.fme.feature.attendance.dao.AttendanceDao
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.attendance.utils.sortedByClassAndSemester
 import com.tstudioz.fax.fme.networking.NetworkServiceResult
-import com.tstudioz.fax.fme.util.attendanceTestData
+import com.tstudioz.fax.fme.testStuff.attendanceTestData
 
 class MockAttendanceRepository(
     private val attendanceDao: AttendanceDao,
