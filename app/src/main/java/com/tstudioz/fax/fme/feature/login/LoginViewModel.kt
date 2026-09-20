@@ -3,27 +3,28 @@ package com.tstudioz.fax.fme.feature.login
 import android.app.Application
 import android.content.SharedPreferences
 import android.util.Patterns
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.database.AppDatabase
-import com.tstudioz.fax.fme.user.UserRepositoryInterface
-import com.tstudioz.fax.fme.user.models.UserRepositoryResult
-import com.tstudioz.fax.fme.util.PreferenceHelper.get
-import com.tstudioz.fax.fme.util.PreferenceHelper.set
-import com.tstudioz.fax.fme.util.SPKey
-import com.tstudioz.fax.fme.util.SingleLiveEvent
 import com.tstudioz.fax.fme.testStuff.attendanceTestData
 import com.tstudioz.fax.fme.testStuff.eventsTestData
 import com.tstudioz.fax.fme.testStuff.receiptsTestData
 import com.tstudioz.fax.fme.testStuff.studentDataTestData
 import com.tstudioz.fax.fme.testStuff.studomatSubjectTestData
 import com.tstudioz.fax.fme.testStuff.studomatYearInfoTestData
+import com.tstudioz.fax.fme.user.UserRepositoryInterface
+import com.tstudioz.fax.fme.user.models.UserRepositoryResult
+import com.tstudioz.fax.fme.util.PreferenceHelper.get
+import com.tstudioz.fax.fme.util.PreferenceHelper.set
+import com.tstudioz.fax.fme.util.SPKey
+import com.tstudioz.fax.fme.util.SingleLiveEvent
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
@@ -37,7 +38,9 @@ class LoginViewModel(
     var username = MutableLiveData("")
     var password = MutableLiveData("")
     val showLoading = MutableLiveData(false)
-    val snackbarHostState: SnackbarHostState = SnackbarHostState()
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
+
     var passwordHidden = MutableLiveData(true)
 
     var firstTimeInApp = MutableLiveData(false)
@@ -100,7 +103,7 @@ class LoginViewModel(
 
     private fun showSnackbar(message: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            snackbarHostState.showSnackbar(message)
+            _error.emit(message)
         }
     }
 

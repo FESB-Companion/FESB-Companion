@@ -11,26 +11,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +43,7 @@ import com.tstudioz.fax.fme.theme.theme_dark_primaryContainer
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
 @Composable
@@ -53,8 +52,15 @@ fun AttendanceScreen(attendanceViewModel: AttendanceViewModel, innerPaddingValue
     val items = attendanceViewModel.attendanceListFull.observeAsState().value ?: emptyList()
 
     val lifecycleState by LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
-    val snackbarHostState = attendanceViewModel.snackbarHostState
-
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val error = attendanceViewModel.error
+    LaunchedEffect(Unit) {
+        error.collectLatest {
+            it?.let { message ->
+                snackbarHostState.showSnackbar(message)
+            }
+        }
+    }
     LaunchedEffect(lifecycleState) {
         when (lifecycleState) {
             Lifecycle.State.RESUMED -> {
@@ -65,11 +71,35 @@ fun AttendanceScreen(attendanceViewModel: AttendanceViewModel, innerPaddingValue
         }
     }
 
-    Box(Modifier.padding(innerPaddingValues)) {
-        if (items.isNotEmpty()) {
-            CreateAttendanceListView(attendanceViewModel, snackbarHostState)
-        } else {
-            EmptyView()
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        contentWindowInsets = WindowInsets(0.dp),
+        modifier = Modifier.padding(innerPaddingValues),
+        topBar = {
+            Text(
+                text = stringResource(id = R.string.tab_attendance),
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.displayMedium,
+            )
+        }
+    ) {
+        PullToRefreshBox(
+            isRefreshing = attendanceViewModel.isRefreshing.collectAsState().value,
+            onRefresh = {
+                attendanceViewModel.fetchAttendance()
+            }
+        ) {
+            LazyColumn(
+                Modifier.padding(it)
+            ) {
+                item {
+                    if (items.isNotEmpty()) {
+                        CreateAttendanceListView(attendanceViewModel)
+                    } else {
+                        Column(Modifier.fillParentMaxSize()) { EmptyView() }
+                    }
+                }
+            }
         }
     }
 }
@@ -77,55 +107,40 @@ fun AttendanceScreen(attendanceViewModel: AttendanceViewModel, innerPaddingValue
 @Composable
 fun EmptyView() {
     Column(
-        verticalArrangement = Arrangement.Center,
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.contentColors.tertiary
-        )
+        Text(stringResource(id = R.string.no_data))
     }
 }
 
 @OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
 @Composable
-fun CreateAttendanceListView(attendanceViewModel: AttendanceViewModel, snackbarHostState: SnackbarHostState) {
+fun CreateAttendanceListView(
+    attendanceViewModel: AttendanceViewModel
+) {
     val list by attendanceViewModel.attendance.observeAsState(emptyList())
     val shownSemester by attendanceViewModel.shownSemester.observeAsState()
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        contentWindowInsets = WindowInsets(0.dp)
-    ) { paddingValues ->
-        Column(
-            Modifier
-                .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
+    Column(Modifier) {
+        Row(
+            Modifier.padding(horizontal = 32.dp)
         ) {
-            Text(
-                text = stringResource(id = R.string.tab_attendance),
-                modifier = Modifier.padding(32.dp, 40.dp, 0.dp, 8.dp),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.contentColors.primary
-            )
-            Row(
-                Modifier.padding(horizontal = 32.dp)
-            ) {
-                FilterButton(
-                    selected = shownSemester == ShownSemester.FIRST,
-                    text = stringResource(id = R.string.first_semester),
-                    onClick = { attendanceViewModel.showSemester(ShownSemester.FIRST) })
-                FilterButton(
-                    selected = shownSemester == ShownSemester.SECOND,
-                    text = stringResource(id = R.string.second_semester),
-                    onClick = { attendanceViewModel.showSemester(ShownSemester.SECOND) })
-            }
+            FilterButton(
+                selected = shownSemester == ShownSemester.FIRST,
+                text = stringResource(id = R.string.first_semester),
+                onClick = { attendanceViewModel.showSemester(ShownSemester.FIRST) })
+            FilterButton(
+                selected = shownSemester == ShownSemester.SECOND,
+                text = stringResource(id = R.string.second_semester),
+                onClick = { attendanceViewModel.showSemester(ShownSemester.SECOND) })
+        }
 
-            list.forEach { item ->
-                AttendanceItem(item)
-            }
+        list.forEach { item ->
+            AttendanceItem(item)
         }
     }
 }

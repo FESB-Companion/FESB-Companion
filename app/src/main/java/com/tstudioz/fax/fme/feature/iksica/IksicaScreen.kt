@@ -16,15 +16,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -49,7 +47,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.tstudioz.fax.fme.R
@@ -59,7 +56,6 @@ import com.tstudioz.fax.fme.feature.iksica.compose.CardIksicaPopupContent
 import com.tstudioz.fax.fme.feature.iksica.compose.ElevatedCardIksica
 import com.tstudioz.fax.fme.feature.iksica.compose.IksicaItem
 import com.tstudioz.fax.fme.feature.iksica.compose.IksicaReceiptState
-import com.tstudioz.fax.fme.feature.iksica.compose.IksicaViewState
 import com.tstudioz.fax.fme.feature.iksica.compose.NestedSheetState
 import com.tstudioz.fax.fme.feature.iksica.compose.PopupBox
 import com.tstudioz.fax.fme.feature.iksica.compose.rememberNestedSheetState
@@ -67,6 +63,7 @@ import com.tstudioz.fax.fme.feature.iksica.models.IksicaData
 import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.theme.contentColors
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -85,16 +82,23 @@ fun IksicaScreen(iksicaViewModel: IksicaViewModel, innerPaddingValues: PaddingVa
 
     val receiptSelected = iksicaViewModel.receiptSelected.observeAsState().value
     val iksicaData = iksicaViewModel.iksicaData.observeAsState().value
-    val viewState = iksicaViewModel.viewState.observeAsState().value ?: IksicaViewState.Loading
+    val isRefreshing = iksicaViewModel.isRefreshing.collectAsState().value
 
-    val isRefreshing = viewState is IksicaViewState.Fetching || viewState is IksicaViewState.Loading
     val showPopup = remember { mutableStateOf(false) }
-
-    val pullRefreshState = rememberPullRefreshState(isRefreshing, { iksicaViewModel.getReceipts() })
 
     LaunchedEffect(lifecycleState) {
         if (lifecycleState == Lifecycle.State.RESUMED) iksicaViewModel.getReceipts()
+    }
 
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val error = iksicaViewModel.error
+
+    LaunchedEffect(Unit) {
+        error.collectLatest {
+            it?.let { message ->
+                snackbarHostState.showSnackbar(message)
+            }
+        }
     }
 
     DisposableEffect(lifecycleState) {
@@ -108,50 +112,31 @@ fun IksicaScreen(iksicaViewModel: IksicaViewModel, innerPaddingValues: PaddingVa
     }
     BottomSheetScaffold(
         sheetPeekHeight = 0.dp,
-        modifier = Modifier
-            .pullRefresh(pullRefreshState)
-            .nestedScroll(TopAppBarDefaults.pinnedScrollBehavior().nestedScrollConnection),
+        modifier = Modifier.padding(innerPaddingValues),
         scaffoldState = scaffoldState,
-        snackbarHost = { Box(Modifier.padding(innerPaddingValues)) { SnackbarHost(hostState = iksicaViewModel.snackbarHostState) } },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         sheetContent = {
             if (receiptSelected is IksicaReceiptState.Success)
                 BottomSheetIksica(receiptSelected.data) { iksicaViewModel.hideReceiptDetails() }
-        }
+        },
     ) {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .padding(innerPaddingValues)
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = { iksicaViewModel.getReceipts() },
         ) {
-            PullRefreshIndicator(
-                isRefreshing, pullRefreshState, Modifier
-                    .align(Alignment.TopCenter)
-                    .zIndex(5f)
-            )
-
-            when (viewState) {
-                is IksicaViewState.Initial, is IksicaViewState.Empty -> EmptyIksicaView()
-                is IksicaViewState.Success -> {
+            Column{
+                TopBarIksica()
+                if (iksicaData != null) {
                     PopulatedIksicaView(
-                        viewState.data,
+                        iksicaData,
                         listState,
                         nestedSheetState,
                         onCardClick = { showPopup.value = true },
                         onItemClick = { iksicaViewModel.getReceiptDetails(it) }
                     )
+                } else {
+                    EmptyIksicaView()
                 }
-
-                is IksicaViewState.Fetching -> {
-                    PopulatedIksicaView(
-                        viewState.data,
-                        listState,
-                        nestedSheetState,
-                        onCardClick = { showPopup.value = true },
-                        onItemClick = { iksicaViewModel.getReceiptDetails(it) }
-                    )
-                }
-
-                else -> {}
             }
         }
     }
@@ -164,17 +149,12 @@ fun IksicaScreen(iksicaViewModel: IksicaViewModel, innerPaddingValues: PaddingVa
 @OptIn(InternalCoroutinesApi::class)
 @Composable
 fun EmptyIksicaView() {
-    Column {
-        TopBarIksica()
-        Box(Modifier.fillMaxWidth()) {
-            LazyColumn(
-                Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                item {
-                    EmptyIksicaContent(stringResource(id = R.string.iksica_no_data))
-                }
-            }
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        item {
+            EmptyIksicaContent(stringResource(id = R.string.iksica_no_data))
         }
     }
 }
@@ -198,7 +178,10 @@ fun PopulatedIksicaView(
                 val delta = available.y
                 if (listState.firstVisibleItemIndex == 0) {
                     sheetOffset.intValue =
-                        (sheetOffset.intValue + delta).coerceIn(sheetTopPadding, composableHeight.intValue.toFloat())
+                        (sheetOffset.intValue + delta).coerceIn(
+                            sheetTopPadding,
+                            composableHeight.intValue.toFloat()
+                        )
                             .toInt()
                 }
                 return Offset(
@@ -224,8 +207,6 @@ fun PopulatedIksicaView(
                 sheetOffset.intValue = it.size.height
             }
         }) {
-            TopBarIksica()
-
             Box(Modifier.fillMaxWidth()) {
                 ElevatedCardIksica(
                     model.studentData.nameSurname,
@@ -244,11 +225,13 @@ fun PopulatedIksicaView(
                 .noRippleClickable {}
         ) {
             val receipts = model.receipts
-            if (receipts.isNullOrEmpty()) {
-                EmptyIksicaContent(stringResource(id = R.string.iksica_no_receipts))
-            } else {
-                TransactionsText()
-                LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+            LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+                item {
+                    TransactionsText()
+                }
+                if (receipts.isNullOrEmpty()) {
+                    item { EmptyIksicaContent(stringResource(id = R.string.iksica_no_receipts)) }
+                } else {
                     items(receipts) {
                         IksicaItem(it) { onItemClick(it) }
                     }

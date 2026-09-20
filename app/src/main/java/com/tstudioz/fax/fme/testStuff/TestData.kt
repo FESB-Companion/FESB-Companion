@@ -555,6 +555,105 @@ val receiptsTestData = listOf(
         paidAmount = 6.0,
         authorised = "Domagoj Živković",
         href = "https://example.com/receipts/10"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza Kampus",
+        date = "08.10.2025",
+        dateString = "8. listopada 2025.",
+        time = "13:30",
+        receiptAmount = 26.0,
+        subsidizedAmount = 18.0,
+        paidAmount = 8.0,
+        authorised = "Mateo Novak",
+        href = "https://example.com/receipts/8"
+    ),
+    ReceiptRoom(
+        restaurant = "Restoran Studentski Dom",
+        date = "09.10.2025",
+        dateString = "9. listopada 2025.",
+        time = "20:05",
+        receiptAmount = 33.0,
+        subsidizedAmount = 23.0,
+        paidAmount = 10.0,
+        authorised = "Ema Perić",
+        href = "https://example.com/receipts/9"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza FESB",
+        date = "10.10.2025",
+        dateString = "10. listopada 2025.",
+        time = "12:10",
+        receiptAmount = 21.0,
+        subsidizedAmount = 15.0,
+        paidAmount = 6.0,
+        authorised = "Domagoj Živković",
+        href = "https://example.com/receipts/10"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza Kampus",
+        date = "08.10.2025",
+        dateString = "8. listopada 2025.",
+        time = "13:30",
+        receiptAmount = 26.0,
+        subsidizedAmount = 18.0,
+        paidAmount = 8.0,
+        authorised = "Mateo Novak",
+        href = "https://example.com/receipts/8"
+    ),
+    ReceiptRoom(
+        restaurant = "Restoran Studentski Dom",
+        date = "09.10.2025",
+        dateString = "9. listopada 2025.",
+        time = "20:05",
+        receiptAmount = 33.0,
+        subsidizedAmount = 23.0,
+        paidAmount = 10.0,
+        authorised = "Ema Perić",
+        href = "https://example.com/receipts/9"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza FESB",
+        date = "10.10.2025",
+        dateString = "10. listopada 2025.",
+        time = "12:10",
+        receiptAmount = 21.0,
+        subsidizedAmount = 15.0,
+        paidAmount = 6.0,
+        authorised = "Domagoj Živković",
+        href = "https://example.com/receipts/10"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza Kampus",
+        date = "08.10.2025",
+        dateString = "8. listopada 2025.",
+        time = "13:30",
+        receiptAmount = 26.0,
+        subsidizedAmount = 18.0,
+        paidAmount = 8.0,
+        authorised = "Mateo Novak",
+        href = "https://example.com/receipts/8"
+    ),
+    ReceiptRoom(
+        restaurant = "Restoran Studentski Dom",
+        date = "09.10.2025",
+        dateString = "9. listopada 2025.",
+        time = "20:05",
+        receiptAmount = 33.0,
+        subsidizedAmount = 23.0,
+        paidAmount = 10.0,
+        authorised = "Ema Perić",
+        href = "https://example.com/receipts/9"
+    ),
+    ReceiptRoom(
+        restaurant = "Menza FESB",
+        date = "10.10.2025",
+        dateString = "10. listopada 2025.",
+        time = "12:10",
+        receiptAmount = 21.0,
+        subsidizedAmount = 15.0,
+        paidAmount = 6.0,
+        authorised = "Domagoj Živković",
+        href = "https://example.com/receipts/10"
     )
 )
 

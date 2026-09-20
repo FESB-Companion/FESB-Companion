@@ -5,9 +5,13 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import com.tstudioz.fax.fme.routing.LoginRouter
 import com.tstudioz.fax.fme.theme.AppTheme
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,9 +30,18 @@ class LoginActivity : AppCompatActivity() {
         onBackListen()
         setContent {
             AppTheme {
+                val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+                val error = loginViewModel.error
+                LaunchedEffect(Unit) {
+                    error.collectLatest {
+                        it?.let { message ->
+                            snackbarHostState.showSnackbar(message)
+                        }
+                    }
+                }
                 LoginScreen(
                     showLoading = loginViewModel.showLoading,
-                    snackbarHostState = loginViewModel.snackbarHostState,
+                    snackbarHostState = snackbarHostState,
                     username = loginViewModel.username,
                     password = loginViewModel.password,
                     passwordHidden = loginViewModel.passwordHidden,

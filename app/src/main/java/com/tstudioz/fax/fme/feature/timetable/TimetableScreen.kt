@@ -26,6 +26,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -74,26 +75,41 @@ import com.tstudioz.fax.fme.theme.eventCardBackground
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.TextStyle
 
-@OptIn(ExperimentalMaterial3Api::class, InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    InternalCoroutinesApi::class,
+    ExperimentalCoroutinesApi::class
+)
 @Composable
 fun TimetableScreen(timetableViewModel: TimetableViewModel, innerPaddingValues: PaddingValues) {
 
     val showDayEvent = timetableViewModel.currentEventShown
-    val shownWeekChooseMenu = timetableViewModel.shownWeekChooseMenu.observeAsState(initial = false).value
+    val shownWeekChooseMenu =
+        timetableViewModel.shownWeekChooseMenu.observeAsState(initial = false).value
     val lessonsToShow = timetableViewModel.events
     val shownWeek = timetableViewModel.mondayOfSelectedWeek
     val daysInPeriods = timetableViewModel.daysInPeriods.value ?: emptyMap()
     val monthData = timetableViewModel.monthData
-    val fetchUserTimetable = { selectedDate: LocalDate -> timetableViewModel.fetchUserTimetable(selectedDate) }
+    val fetchUserTimetable =
+        { selectedDate: LocalDate -> timetableViewModel.fetchUserTimetable(selectedDate) }
     val showEvent = { it: Event -> timetableViewModel.showEvent(it) }
     val showWeekChooseMenu = { it: Boolean -> timetableViewModel.showWeekChooseMenu(it) }
     val hideEvent = { timetableViewModel.hideEvent() }
-    val snackbarHostState = timetableViewModel.snackbarHostState
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val error = timetableViewModel.error
+    LaunchedEffect(Unit) {
+        error.collectLatest {
+            it?.let { message ->
+                snackbarHostState.showSnackbar(message)
+            }
+        }
+    }
 
     val sheetStateEvent = rememberModalBottomSheetState()
     val sheetStateCalendar = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -154,11 +170,21 @@ fun TimetableScreen(timetableViewModel: TimetableViewModel, innerPaddingValues: 
             val mapped = lessonsToShow.observeAsState(emptyList()).value
             val subExists: Boolean = mapped.any { it.start.dayOfWeek.value == 6 }
             val eventBefore8AM = mapped.minByOrNull { it.start.toLocalTime() }
-            val eventExistsBefore8AM = eventBefore8AM?.start?.toLocalTime()?.isBefore(LocalTime.of(8, 0))
+            val eventExistsBefore8AM =
+                eventBefore8AM?.start?.toLocalTime()?.isBefore(LocalTime.of(8, 0))
             val eventAfter8PM = mapped.maxByOrNull { it.end.toLocalTime() }
-            val eventExistsAfter8PM = eventAfter8PM?.end?.toLocalTime()?.isAfter(LocalTime.of(20, 0))
-            val minTime = if (eventExistsBefore8AM == true) eventBefore8AM.start.toLocalTime() else LocalTime.of(8, 0)
-            val maxTime = if (eventExistsAfter8PM == true) eventAfter8PM.end.toLocalTime() else LocalTime.of(20, 0)
+            val eventExistsAfter8PM =
+                eventAfter8PM?.end?.toLocalTime()?.isAfter(LocalTime.of(20, 0))
+            val minTime =
+                if (eventExistsBefore8AM == true) eventBefore8AM.start.toLocalTime() else LocalTime.of(
+                    8,
+                    0
+                )
+            val maxTime =
+                if (eventExistsAfter8PM == true) eventAfter8PM.end.toLocalTime() else LocalTime.of(
+                    20,
+                    0
+                )
 
             Schedule(
                 events = mapped,
@@ -177,7 +203,8 @@ fun TimetableScreen(timetableViewModel: TimetableViewModel, innerPaddingValues: 
                 minTime = minTime,
                 maxTime = maxTime,
                 minDate = shownWeek.observeAsState().value ?: LocalDate.now(),
-                maxDate = (shownWeek.observeAsState().value ?: LocalDate.now()).plusDays(if (subExists) 5 else 4),
+                maxDate = (shownWeek.observeAsState().value
+                    ?: LocalDate.now()).plusDays(if (subExists) 5 else 4),
                 onClick = { showEvent(it) },
                 eventsGlowing = timetableViewModel.eventsGlowing.observeAsState().value == true
             )
@@ -274,7 +301,10 @@ fun BottomSheetCalendar(
                 .padding(24.dp, 16.dp)
         ) {
             TextButton(hideSheet) {
-                Text(stringResource(id = R.string.cancelChoosingWeek), color = MaterialTheme.contentColors.tertiary)
+                Text(
+                    stringResource(id = R.string.cancelChoosingWeek),
+                    color = MaterialTheme.contentColors.tertiary
+                )
             }
             TextButton({
                 selection?.let {

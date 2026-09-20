@@ -57,4 +57,7 @@ class MockTimeTableRepository(
         timeTableDao.insert(classes.map { EventRoom(it) })
     }
 
+    override suspend fun deleteEventsCache() {
+        _events.emit(emptyList())
+    }
 }

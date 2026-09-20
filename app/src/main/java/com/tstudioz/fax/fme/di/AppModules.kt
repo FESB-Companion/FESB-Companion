@@ -46,7 +46,7 @@ val module = module {
     factory<AppDatabase> { getRoomDatabase(get()) }
     single<SharedPreferences> { getSharedPreferences(androidContext()) }
     viewModel { TimetableViewModel(get(), get(), get(), androidApplication()) }
-    viewModel { SettingsViewModel(androidApplication(), get(), get()) }
+    viewModel { SettingsViewModel(androidApplication(), get(), get(), get()) }
 }
 
 fun getRoomDatabase(application: Application): AppDatabase {

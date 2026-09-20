@@ -3,7 +3,6 @@ package com.tstudioz.fax.fme.feature.timetable
 import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +22,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -38,7 +40,12 @@ class TimetableViewModel(
     private val application: Application
 ) : ViewModel() {
 
-    val snackbarHostState = SnackbarHostState()
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
+    private suspend fun showSnackbar(message: String) {
+        _error.emit(message)
+    }
+
     val internetAvailable: LiveData<Boolean> = InternetConnectionObserver.get()
 
     private val _currentEventShown = MutableLiveData<Event?>(null)
@@ -55,7 +62,8 @@ class TimetableViewModel(
     val daysInPeriods: LiveData<Map<LocalDate, TimeTableInfo>> = _daysInPeriods
 
     private val _mondayOfSelectedWeek: MutableLiveData<LocalDate> = MutableLiveData<LocalDate>(
-        LocalDate.now().let { it.minusDays((it.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong()) })
+        LocalDate.now()
+            .let { it.minusDays((it.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong()) })
     val mondayOfSelectedWeek: LiveData<LocalDate> = _mondayOfSelectedWeek
 
     private val _showWeekChooseMenu = MutableLiveData(false)
@@ -72,7 +80,13 @@ class TimetableViewModel(
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.e("Error timetable", exception.toString())
-        viewModelScope.launch(Dispatchers.Main) { snackbarHostState.showSnackbar(application.getString(R.string.general_error)) }
+        viewModelScope.launch(Dispatchers.Main) {
+            showSnackbar(
+                application.getString(
+                    R.string.general_error
+                )
+            )
+        }
     }
 
     init {
@@ -81,25 +95,31 @@ class TimetableViewModel(
 
     fun resetToCurrentWeek() {
         viewModelScope.launch(Dispatchers.IO + handler) {
-            timeTableRepository.events.collect { _events.postValue(it) }
+            val events = timeTableRepository.events.firstOrNull()
+            _events.postValue(events ?: emptyList())
         }
         _mondayOfSelectedWeek.postValue(
-            LocalDate.now().let { it.minusDays((it.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong()) })
+            LocalDate.now()
+                .let { it.minusDays((it.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong()) })
         eventsGlowing.postValue(sharedPreferences[SPKey.EVENTS_GLOW, false])
     }
 
     fun fetchUserTimetable() {
         if (internetAvailable.value == false) return
         val today = LocalDate.now()
-        val startDate: LocalDate = today.minusDays((today.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
-        val endDate: LocalDate = today.minusDays((today.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
+        val startDate: LocalDate =
+            today.minusDays((today.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
+        val endDate: LocalDate =
+            today.minusDays((today.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
         fetchUserTimetable(startDate, endDate, startDate, shouldCache = true)
     }
 
     fun fetchUserTimetable(date: LocalDate) {
         if (internetAvailable.value == false) return
-        val startDate: LocalDate = date.minusDays((date.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
-        val endDate: LocalDate = date.minusDays((date.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
+        val startDate: LocalDate =
+            date.minusDays((date.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
+        val endDate: LocalDate =
+            date.minusDays((date.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
         _mondayOfSelectedWeek.value = startDate
         fetchUserTimetable(startDate, endDate, startDate)
     }
@@ -117,7 +137,12 @@ class TimetableViewModel(
 
         viewModelScope.launch(Dispatchers.IO + handler) {
             val username = userRepository.getCurrentUserName()
-            val items = timeTableRepository.fetchTimetable(username, startDateFormated, endDateFormated, shouldCache)
+            val items = timeTableRepository.fetchTimetable(
+                username,
+                startDateFormated,
+                endDateFormated,
+                shouldCache
+            )
             _mondayOfSelectedWeek.postValue(shownWeekMonday)
             _events.postValue(items)
         }

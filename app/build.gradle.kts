@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+private val MOCK_DATA_DEBUG = "mockDataDebug"
 android {
     compileSdk = 37
     defaultConfig {
@@ -55,7 +56,6 @@ android {
                 isShrinkResources = true
                 proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                 signingConfig = signingConfigs.getByName("releaseDebug")
-                buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "false")
             }
         }
 
@@ -64,7 +64,20 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
-            buildConfigField("Boolean", "MOCK_REPOS_ENABLED", "true")
+        }
+        create(MOCK_DATA_DEBUG) {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+
+        all {
+            buildConfigField(
+                "Boolean",
+                "MOCK_REPOS_ENABLED",
+                if (name == MOCK_DATA_DEBUG) "true" else "false"
+            )
         }
     }
 
