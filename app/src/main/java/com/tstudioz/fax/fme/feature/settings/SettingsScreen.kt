@@ -1,5 +1,6 @@
 package com.tstudioz.fax.fme.feature.settings
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +42,7 @@ import com.tstudioz.fax.fme.theme.theme_dark_outline
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 import com.tstudioz.fax.fme.theme.theme_dark_surface
 import org.koin.androidx.compose.koinViewModel
+import androidx.core.net.toUri
 
 val leftPadding = 10.dp
 val listItemStartPadding = 16.dp
@@ -115,6 +118,19 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel(), router: Setti
                         supportText = stringResource(id = R.string.help_stabilize_app),
                         onClick = {
                             router.sendEmail(viewModel.getBugReportEmailModalModel())
+                        }
+                    )
+                    val context = LocalContext.current
+                    val link = stringResource(R.string.linkNaApp)
+                    SettingsItem(
+                        title = stringResource(R.string.pogledaj_izvorni_kod),
+                        supportText = stringResource(R.string.istra_i_projekt_ili_doprinesi_njegovom_razvoju_na_githubu),
+                        onClick = {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                link.toUri()
+                            )
+                            context.startActivity(intent)
                         }
                     )
                     CategoryTitle(title = stringResource(id = R.string.customizations))
