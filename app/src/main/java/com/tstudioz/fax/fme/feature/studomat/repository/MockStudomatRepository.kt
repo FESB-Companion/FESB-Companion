@@ -6,24 +6,27 @@ import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.studomat.repository.models.StudomatRepositoryResult
 import com.tstudioz.fax.fme.testStuff.studomatStudentData
-import com.tstudioz.fax.fme.testStuff.studomatSubjectTestData
-import com.tstudioz.fax.fme.testStuff.studomatYearInfoTestData
+import com.tstudioz.fax.fme.testStuff.studomatSubjectTestDataReal
+import com.tstudioz.fax.fme.testStuff.studomatYearInfoTestDataReal
 
 class MockStudomatRepository(
     private val studomatDao: StudomatDao,
 ) : StudomatRepositoryInterface {
 
     override fun getStudomatDataAndYears(): StudomatRepositoryResult.StudentAndYearsResult {
-        return StudomatRepositoryResult.StudentAndYearsResult.Success(studomatYearInfoTestData, studomatStudentData)
+        return StudomatRepositoryResult.StudentAndYearsResult.Success(
+            studomatYearInfoTestDataReal,
+            studomatStudentData
+        )
     }
 
     override fun getYear(year: StudomatYearInfo): StudomatRepositoryResult.ChosenYearResult {
+        val subjects = studomatSubjectTestDataReal.sortedByNameAndSemester().groupBy { it.year }
         return StudomatRepositoryResult.ChosenYearResult.Success(
             Pair(
-                year,
-                studomatSubjectTestData.filter { it.course == year.courseName })
+                year,subjects[year.academicYear] ?:emptyList()
+            )
         )
-
     }
 
     override fun insert(year: StudomatYear) {

@@ -8,26 +8,24 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.currentStateAsState
@@ -37,6 +35,7 @@ import com.tstudioz.fax.fme.feature.studomat.compose.StudomatContent
 import com.tstudioz.fax.fme.feature.studomat.compose.WebViewScreen
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import com.tstudioz.fax.fme.theme.studomatBlue
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -44,11 +43,10 @@ import org.koin.compose.koinInject
 fun StudomatScreen(studomatViewModel: StudomatViewModel, innerPaddingValues: PaddingValues) {
 
     val studomatData = studomatViewModel.studomatData.observeAsState().value
-    val snackbarHostState = remember { studomatViewModel.snackbarHostState }
+
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val error = studomatViewModel.error
     val isRefreshing = studomatViewModel.isRefreshing.observeAsState().value
-    val pullRefreshState = rememberPullRefreshState(isRefreshing == true, {
-        studomatViewModel.getStudomatData(pulldownTriggered = true)
-    })
     val openedWebview = remember { mutableStateOf(false) }
     val cookieJar = koinInject<MonsterCookieJar>()
 
@@ -58,42 +56,55 @@ fun StudomatScreen(studomatViewModel: StudomatViewModel, innerPaddingValues: Pad
             studomatViewModel.getStudomatData()
         }
     }
+    LaunchedEffect(Unit) {
+        error.collectLatest {
+            it?.let { message ->
+                snackbarHostState.showSnackbar(message)
+            }
+        }
+    }
 
     Scaffold(
-        modifier = Modifier.pullRefresh(pullRefreshState),
+        Modifier
+            .background(Brush.verticalGradient(listOf(studomatBlue, Color.Transparent)))
+            .padding(innerPaddingValues),
+        containerColor = Color.Transparent,
         contentWindowInsets = WindowInsets(0.dp),
-        snackbarHost = { Box(Modifier.padding(innerPaddingValues)) { SnackbarHost(hostState = snackbarHostState) } }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.verticalGradient(listOf(studomatBlue, Color.Transparent)))
-                .padding(innerPaddingValues)
-                .padding(innerPadding),
-        ) {
-            if (openedWebview.value) {
-                BackHandler { openedWebview.value = false }
-                WebViewScreen(cookieJar)
-                return@Scaffold
-            }
-            PullRefreshIndicator(
-                isRefreshing == true,
-                pullRefreshState,
-                Modifier
-                    .align(Alignment.TopCenter)
-                    .zIndex(2f),
-                scale = true
-            )
-            Column(Modifier.fillMaxSize()) {
+        topBar = {
+            if (!openedWebview.value){
                 Text(
                     text = stringResource(id = R.string.tab_studomat),
                     style = MaterialTheme.typography.displayMedium,
                     modifier = Modifier.padding(16.dp)
                 )
-                if (!studomatData.isNullOrEmpty()) {
-                    StudomatContent(studomatData, onClick = { openedWebview.value = true })
-                } else {
-                    EmptyStudomatView()
+            }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { innerPadding ->
+        PullToRefreshBox(
+            isRefreshing = isRefreshing == true,
+            onRefresh = {
+                studomatViewModel.getStudomatData(pulldownTriggered = true)
+            }
+        ) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                if (openedWebview.value) {
+                    BackHandler { openedWebview.value = false }
+                    WebViewScreen(cookieJar)
+                    return@PullToRefreshBox
+                }
+                LazyColumn {
+                    item {
+                        if (!studomatData.isNullOrEmpty()) {
+                            StudomatContent(studomatData, onClick = { openedWebview.value = true })
+                        } else {
+                            Column(Modifier.fillParentMaxSize()) { EmptyStudomatView() }
+                        }
+                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.tstudioz.fax.fme.feature.studomat
 
 import android.app.Application
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +17,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class StudomatViewModel(
@@ -32,14 +33,15 @@ class StudomatViewModel(
      */
     val isRefreshing = MutableLiveData(false)
     val studomatData = MutableLiveData<List<StudomatYear>>(emptyList())
-    val snackbarHostState: SnackbarHostState = SnackbarHostState()
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
     private var student = MutableLiveData(Student())
     private var yearNames = MutableLiveData<List<StudomatYearInfo>>(emptyList())
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
         viewModelScope.launch(Dispatchers.Main) {
-            snackbarHostState.showSnackbar(
+            showSnackbar(
                 getApplication<Application>().applicationContext.getString(
                     R.string.studomat_error_general
                 )
@@ -69,7 +71,11 @@ class StudomatViewModel(
                 }
 
                 is StudomatRepositoryResult.StudentAndYearsResult.Failure -> {
-                    snackbarHostState.showSnackbar(getApplication<Application>().applicationContext.getString(R.string.studomar_error))
+                    showSnackbar(
+                        getApplication<Application>().applicationContext.getString(
+                            R.string.studomar_error
+                        )
+                    )
                 }
             }
 
@@ -100,7 +106,7 @@ class StudomatViewModel(
                         }
 
                         is StudomatRepositoryResult.ChosenYearResult.Failure -> {
-                            snackbarHostState.showSnackbar(
+                            showSnackbar(
                                 getApplication<Application>().applicationContext.getString(
                                     R.string.studomar_error
                                 )
@@ -115,5 +121,9 @@ class StudomatViewModel(
             yearNames.postValue(yearsInfo)
             if (pulldownTriggered) isRefreshing.postValue(false)
         }
+    }
+
+    private suspend fun showSnackbar(message: String) {
+        _error.emit(message)
     }
 }

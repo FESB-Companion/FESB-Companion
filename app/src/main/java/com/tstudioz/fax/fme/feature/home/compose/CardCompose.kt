@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,17 +33,14 @@ fun CardsCompose(openMenza: () -> Unit, homeViewModel: HomeViewModel) {
             Modifier
                 .weight(0.5f)
         ) {
-            val noInternetMenza = stringResource(R.string.no_internet_menza)
+            val internetAvailable = homeViewModel.internetAvailable.observeAsState().value ?: false
             CardCompose(
                 stringResource(id = R.string.menza_title),
                 stringResource(id = R.string.menza_desc),
-                meniColor,
-                meniColor,
+                if (internetAvailable) meniColor else Color.DarkGray,
                 onClick = {
                     if (homeViewModel.internetAvailable.value == true) {
                         openMenza()
-                    } else {
-                        homeViewModel.showSnackbar(message = noInternetMenza)
                     }
                 })
         }
@@ -64,7 +62,13 @@ fun CardsCompose(openMenza: () -> Unit, homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun CardCompose(title: String, description: String, color1: Color, color2: Color, onClick: () -> Unit = { }) {
+fun CardCompose(
+    title: String,
+    description: String,
+    color1: Color,
+    color2: Color = color1,
+    onClick: () -> Unit = { }
+) {
     Column(
         modifier = Modifier
             .padding(horizontal = 5.dp)

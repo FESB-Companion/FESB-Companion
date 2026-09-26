@@ -1,13 +1,14 @@
 package com.tstudioz.fax.fme.feature.attendance
 
+import android.app.Application
 import android.util.Log
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.attendance.repository.AttendanceRepositoryInterface
 import com.tstudioz.fax.fme.feature.attendance.utils.ShownSemester
@@ -17,29 +18,32 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class AttendanceViewModel(
-    private val repository: AttendanceRepositoryInterface
+    private val repository: AttendanceRepositoryInterface,
+    private val application: Application
 ) : ViewModel() {
 
     val internetAvailable: LiveData<Boolean> = InternetConnectionObserver.get()
 
-    private var lastFetch = 0L
-    private val has60SecondPassed: Boolean
-        get() = System.currentTimeMillis() - lastFetch > 60000
-
-    private var _attendanceListFull: MutableLiveData<List<List<AttendanceEntry>>> = MutableLiveData(emptyList())
+    private var _attendanceListFull: MutableLiveData<List<List<AttendanceEntry>>> =
+        MutableLiveData(emptyList())
     val attendanceListFull: LiveData<List<List<AttendanceEntry>>> = _attendanceListFull
 
-    private val attendanceFirstSem = _attendanceListFull.map { list -> list.filter { it.firstOrNull()?.semester == 1 } }
+    private val attendanceFirstSem =
+        _attendanceListFull.map { list -> list.filter { it.firstOrNull()?.semester == 1 } }
     private val attendanceSecondSem =
         _attendanceListFull.map { list -> list.filter { it.firstOrNull()?.semester == 2 } }
 
     private val _shownSemester: MutableLiveData<ShownSemester?> = MutableLiveData(null)
-    val shownSemester: MutableLiveData<ShownSemester?> = _shownSemester
+    val shownSemester: LiveData<ShownSemester?> = _shownSemester
 
     private val _attendance: LiveData<List<List<AttendanceEntry>>> = _shownSemester.switchMap {
         when (it) {
@@ -51,12 +55,21 @@ class AttendanceViewModel(
 
     val attendance: LiveData<List<List<AttendanceEntry>>> = _attendance
 
-    val snackbarHostState = SnackbarHostState()
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
 
+    private suspend fun showSnackbar(message: String) {
+        _error.emit(message)
+    }
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.e("Error attendance", exception.toString())
-        viewModelScope.launch(Dispatchers.Main) { snackbarHostState.showSnackbar("Došlo je do pogreške") }
+        viewModelScope.launch(Dispatchers.Main) {
+            showSnackbar(application.getString(R.string.general_error))
+        }
     }
 
     init {
@@ -66,19 +79,20 @@ class AttendanceViewModel(
 
     fun fetchAttendance() {
         if (internetAvailable.value == false) return
-        if (!has60SecondPassed) return
         viewModelScope.launch(context = Dispatchers.IO + handler) {
-            lastFetch = System.currentTimeMillis()
+            _isRefreshing.emit(true)
+
             when (val attendance = repository.fetchAttendance()) {
                 is NetworkServiceResult.AttendanceParseResult.Success -> {
-                    val data = attendance.data
-                    _attendanceListFull.postValue(data)
+                    _attendanceListFull.postValue(attendance.data)
                 }
 
                 is NetworkServiceResult.AttendanceParseResult.Failure -> {
-                    snackbarHostState.showSnackbar("Došlo je do pogreške")
+                    showSnackbar(application.getString(R.string.general_error))
                 }
             }
+
+            _isRefreshing.emit(false)
         }
     }
 
@@ -91,5 +105,4 @@ class AttendanceViewModel(
     fun showSemester(semester: ShownSemester) {
         _shownSemester.value = if (_shownSemester.value == semester) null else semester
     }
-
 }

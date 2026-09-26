@@ -26,7 +26,7 @@ val attendanceModule = module {
             AttendanceRepository(get(), get())
         }
     }
-    viewModel { AttendanceViewModel(get()) }
+    viewModel { AttendanceViewModel(get(), get()) }
 }
 
 fun getAttendanceDao(db: AppDatabase): AttendanceDao {

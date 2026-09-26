@@ -3,7 +3,6 @@ package com.tstudioz.fax.fme.feature.home
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import androidx.compose.material3.SnackbarHostState
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -22,6 +21,8 @@ import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -39,7 +40,13 @@ class HomeViewModel(
 
     val internetAvailable: LiveData<Boolean> = InternetConnectionObserver.get()
 
-    val snackbarHostState: SnackbarHostState = SnackbarHostState()
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
+
+    private suspend fun showSnackbar(message: String) {
+        _error.emit(message)
+    }
+
     private val _weatherDisplay = MutableLiveData<WeatherDisplay>()
     private val _notes = MutableLiveData<List<Note>>()
     val nameOfUser = MutableLiveData<String>()
@@ -50,7 +57,7 @@ class HomeViewModel(
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d("HomeViewModel", "Caught $exception")
         viewModelScope.launch(Dispatchers.Main) {
-            snackbarHostState.showSnackbar(
+            showSnackbar(
                 getApplication<Application>().applicationContext.getString(
                     R.string.general_error
                 )
@@ -70,7 +77,7 @@ class HomeViewModel(
             try {
                 weatherRepository.fetchWeatherDetails()?.let { _weatherDisplay.postValue(it) }
             } catch (e: Exception) {
-                snackbarHostState.showSnackbar(getApplication<Application>().applicationContext.getString(R.string.weather_error))
+                showSnackbar(getApplication<Application>().applicationContext.getString(R.string.weather_error))
             }
         }
     }
@@ -100,8 +107,10 @@ class HomeViewModel(
     fun fetchDailyTimetable() {
         if (internetAvailable.value == false) return
         val date = LocalDate.now()
-        val startDate: LocalDate = date.minusDays((date.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
-        val endDate: LocalDate = date.minusDays((date.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
+        val startDate: LocalDate =
+            date.minusDays((date.dayOfWeek.value - DayOfWeek.MONDAY.value).toLong())
+        val endDate: LocalDate =
+            date.minusDays((date.dayOfWeek.value - DayOfWeek.SATURDAY.value).toLong())
         fetchDailyTimetable(startDate, endDate)
     }
 
@@ -143,12 +152,6 @@ class HomeViewModel(
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault())
                 else it.toString()
             })
-        }
-    }
-
-    fun showSnackbar(message: String) {
-        viewModelScope.launch(Dispatchers.Main + handler) {
-            snackbarHostState.showSnackbar(message)
         }
     }
 }
