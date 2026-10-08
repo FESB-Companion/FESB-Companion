@@ -23,6 +23,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -53,6 +55,12 @@ class HomeViewModel(
     val weatherDisplay: LiveData<WeatherDisplay> = _weatherDisplay
     val notes: LiveData<List<Note>> = _notes
     val events: LiveData<List<Event>> = timeTableRepository.events.asLiveData()
+
+    val showGithubMessage = userRepository.showGithubMessage.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false
+    )
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d("HomeViewModel", "Caught $exception")
@@ -152,6 +160,12 @@ class HomeViewModel(
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault())
                 else it.toString()
             })
+        }
+    }
+
+    fun hideGithubMessage() {
+        viewModelScope.launch(Dispatchers.IO + handler) {
+            userRepository.hideGithubMessage()
         }
     }
 }

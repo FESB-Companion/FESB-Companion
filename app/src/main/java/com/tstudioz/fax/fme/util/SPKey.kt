@@ -5,5 +5,6 @@ enum class SPKey {
     LOGGED_IN,
     FIRST_TIME,
     EVENTS_GLOW,
-    TEST_MODE
+    TEST_MODE,
+    SHOW_GITHUB_MESSAGE
 }
