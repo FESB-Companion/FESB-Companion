@@ -9,6 +9,7 @@ import com.tstudioz.fax.fme.networking.session.SessionDelegateInterface
 import com.tstudioz.fax.fme.user.models.User
 import com.tstudioz.fax.fme.user.models.UserRepositoryResult
 import com.tstudioz.fax.fme.user.models.UserRoom
+import com.tstudioz.fax.fme.util.PreferenceHelper.booleanFlow
 import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey
 
@@ -19,6 +20,8 @@ class UserRepository(
     private val sessionDelegate: SessionDelegateInterface,
     private val appDatabase: AppDatabase,
 ) : UserRepositoryInterface {
+
+    override val showGithubMessage = sharedPreferences.booleanFlow(SPKey.SHOW_GITHUB_MESSAGE.toString(), true)
 
     override suspend fun attemptLogin(username: String, password: String): UserRepositoryResult.LoginResult {
         return when (val result = userService.loginUser(username, password)) {
@@ -53,5 +56,9 @@ class UserRepository(
         sessionDelegate.clearSession()
         appDatabase.clearAllTables()
         sharedPreferences[SPKey.LOGGED_IN] = false
+    }
+
+    override suspend fun hideGithubMessage(){
+        sharedPreferences[SPKey.SHOW_GITHUB_MESSAGE] = false
     }
 }

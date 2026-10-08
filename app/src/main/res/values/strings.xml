@@ -123,7 +123,7 @@
     <string name="help_stabilize_app">Pomozi učiniti aplikaciju stabilnijom slanjem bug reporta</string>
     <string name="make_events_glow">Uključi event glow</string>
     <string name="make_event_glow_description">Postavi glow iza termina u rasporedu</string>
-    <string name="customizations">Preference</string>
+    <string name="customizations">PREFERENCE</string>
     <string name="about_app">O APLIKACIJI</string>
     <string name="version">Verzija</string>
     <string name="developers">Developeri</string>
@@ -131,6 +131,10 @@
     <string name="data_privacy">Privatnost podataka</string>
     <string name="library_licenses">Licence korištenih biblioteka</string>
     <string name="send_mail_using">Pošalji email pomoću…</string>
+    <string name="pogledaj_izvorni_kod">Pogledaj izvorni kod</string>
+    <string name="istra_i_projekt_ili_doprinesi_njegovom_razvoju_na_githubu">Istraži projekt ili doprinesi njegovom razvoju na GitHubu.</string>
+    <string name="github_repo_url">https://github.com/FESB-Companion/FESB-Companion</string>
+    <string name="close">Zatvori</string>
 
     // Iksica
     <string name="iksica_no_data">Nema podataka</string>
@@ -226,4 +230,5 @@
     <string name="lunch_title">Ručak</string>
     <string name="dinner_title">Večera</string>
     <string name="no_internet_menza">Nije moguće otvoriti menzu bez internetske veze.</string>
+    <string name="fesb_companion_je_sada_na_githubu">FESB Companion je sada na GitHubu</string>
 </resources>

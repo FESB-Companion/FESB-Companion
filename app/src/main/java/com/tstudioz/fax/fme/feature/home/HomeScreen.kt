@@ -40,9 +40,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.feature.attendance.models.Note
 import com.tstudioz.fax.fme.feature.home.compose.CardsCompose
+import com.tstudioz.fax.fme.feature.home.compose.GithubMessage
 import com.tstudioz.fax.fme.feature.home.compose.NotesCompose
 import com.tstudioz.fax.fme.feature.home.compose.TodayTimetableCompose
 import com.tstudioz.fax.fme.feature.home.models.WeatherDisplay
@@ -74,6 +76,7 @@ fun HomeScreen(
     val events: LiveData<List<Event>> = homeViewModel.events
     val insertNote: (note: Note) -> Unit = homeViewModel::insert
     val deleteNote: (note: Note) -> Unit = homeViewModel::delete
+    val showGithubMessage by homeViewModel.showGithubMessage.collectAsStateWithLifecycle()
 
     val lifecycleState by LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
 
@@ -127,8 +130,7 @@ fun HomeScreen(
                                 .clip(CircleShape)
                                 .clickable {
                                     router.routeToSettings()
-                                }
-                        )
+                                })
                     }
                 }
                 item {
@@ -139,16 +141,17 @@ fun HomeScreen(
                 }
                 item {
                     NotesCompose(
-                        notes = notes.observeAsState().value ?: emptyList(),
-                        insertNote,
-                        deleteNote
+                        notes = notes.observeAsState().value ?: emptyList(), insertNote, deleteNote
                     )
                 }
+                if (showGithubMessage) {
+                    item {
+                        GithubMessage(homeViewModel::hideGithubMessage)
+                    }
+                }
                 item {
-                    TodayTimetableCompose(
-                        events.observeAsState().value?.filter { event -> event.start.toLocalDate() == LocalDate.now() }
-                            ?: emptyList()
-                    )
+                    TodayTimetableCompose(events.observeAsState().value?.filter { event -> event.start.toLocalDate() == LocalDate.now() }
+                        ?: emptyList())
                 }
                 item { CardsCompose({ menzaViewModel.openMenza() }, homeViewModel) }
             }
@@ -159,12 +162,10 @@ fun HomeScreen(
 
 @Composable
 fun WeatherCompose(
-    weather: WeatherDisplay?,
-    nameOfUser: String
+    weather: WeatherDisplay?, nameOfUser: String
 ) {
     Column(
-        modifier = Modifier.padding(32.dp, 0.dp, 0.dp, 0.dp),
-        horizontalAlignment = Alignment.Start
+        modifier = Modifier.padding(32.dp, 0.dp, 0.dp, 0.dp), horizontalAlignment = Alignment.Start
     ) {
         Text(
             text = stringResource(id = R.string.hi_user, nameOfUser),
@@ -192,11 +193,8 @@ fun WeatherPreview() {
         Surface {
             WeatherCompose(
                 weather = WeatherDisplay(
-                    location = "Split",
-                    temperature = 20.0,
-                    summary = "rain"
-                ),
-                nameOfUser = "Marko"
+                    location = "Split", temperature = 20.0, summary = "rain"
+                ), nameOfUser = "Marko"
             )
         }
     }

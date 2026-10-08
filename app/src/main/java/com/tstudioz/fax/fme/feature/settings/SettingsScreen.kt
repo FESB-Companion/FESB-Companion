@@ -1,5 +1,6 @@
 package com.tstudioz.fax.fme.feature.settings
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,7 @@ import com.tstudioz.fax.fme.theme.theme_dark_outline
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 import com.tstudioz.fax.fme.theme.theme_dark_surface
 import org.koin.androidx.compose.koinViewModel
+
 
 val leftPadding = 10.dp
 val listItemStartPadding = 16.dp
@@ -115,6 +117,14 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel(), router: Setti
                         supportText = stringResource(id = R.string.help_stabilize_app),
                         onClick = {
                             router.sendEmail(viewModel.getBugReportEmailModalModel())
+                        }
+                    )
+                    val githubUrl = stringResource(R.string.github_repo_url)
+                    SettingsItem(
+                        title = stringResource(R.string.pogledaj_izvorni_kod),
+                        supportText = stringResource(R.string.istra_i_projekt_ili_doprinesi_njegovom_razvoju_na_githubu),
+                        onClick = {
+                            router.openCustomTab(githubUrl)
                         }
                     )
                     CategoryTitle(title = stringResource(id = R.string.customizations))
@@ -234,9 +244,13 @@ fun SettingsCheckbox(
                     checkedThumbColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     uncheckedThumbColor = MaterialTheme.colorScheme.onSecondary.darken(darkenBy),
                     checkedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer.darken(darkenBy),
+                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer.darken(
+                        darkenBy
+                    ),
                     checkedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    uncheckedBorderColor = MaterialTheme.colorScheme.secondaryContainer.darken(darkenBy),
+                    uncheckedBorderColor = MaterialTheme.colorScheme.secondaryContainer.darken(
+                        darkenBy
+                    ),
                 )
             )
         }
@@ -258,7 +272,13 @@ fun LicenceItem(
     supportText: String?
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
-        ListItem(headlineContent = { Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold) })
+        ListItem(headlineContent = {
+            Text(
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        })
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)

@@ -1,6 +1,9 @@
 package com.tstudioz.fax.fme.util
 
 import android.content.SharedPreferences
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 object PreferenceHelper {
 
@@ -45,6 +48,21 @@ object PreferenceHelper {
             Long::class -> getLong(key, defaultValue as? Long ?: -1) as T
             else -> throw UnsupportedOperationException("Not yet implemented")
         }
+    }
+
+    fun SharedPreferences.booleanFlow(key: String, defaultValue: Boolean): Flow<Boolean> = callbackFlow {
+        // Send the current initial value immediately
+        trySend(getBoolean(key, defaultValue))
+
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, changedKey ->
+            if (changedKey == key) {
+                trySend(getBoolean(key, defaultValue))
+            }
+        }
+
+        registerOnSharedPreferenceChangeListener(listener)
+        // Clean up listener when the flow collection stops
+        awaitClose { unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
 }
