@@ -1,9 +1,9 @@
 package com.tstudioz.fax.fme.networking.interceptors
 
-import com.tstudioz.fax.fme.common.user.models.User
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaLoginServiceInterface
 import com.tstudioz.fax.fme.feature.login.dao.UserDao
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
+import com.tstudioz.fax.fme.user.models.User
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -31,6 +31,7 @@ class ISSPLoginInterceptor(
     }
 
     private val loginMutex = Mutex()
+
     @Volatile
     private var ongoingRefresh: CompletableDeferred<Unit>? = null
 

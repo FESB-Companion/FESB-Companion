@@ -4,23 +4,25 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat.getString
+import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.common.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.feature.settings.model.EmailModalModel
-import com.tstudioz.fax.fme.util.PreferenceHelper.set
+import com.tstudioz.fax.fme.feature.timetable.repository.TimeTableRepositoryInterface
+import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.util.PreferenceHelper.get
+import com.tstudioz.fax.fme.util.PreferenceHelper.set
 import com.tstudioz.fax.fme.util.SPKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import androidx.core.content.edit
 
 class SettingsViewModel(
     private val application: Application,
     private val userRepository: UserRepositoryInterface,
+    private val timeTableRepository: TimeTableRepositoryInterface,
     private val sharedPreferences: SharedPreferences
 ) : AndroidViewModel(application) {
 
@@ -47,6 +49,7 @@ class SettingsViewModel(
     fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.deleteAllUserData()
+            timeTableRepository.deleteEventsCache()
             routeToLogin.emit(true)
             sharedPreferences.edit { clear() }
         }
@@ -87,7 +90,8 @@ class SettingsViewModel(
 
     fun getBugReportEmailModalModel(): EmailModalModel {
         val title = getString(application, R.string.send_mail_using)
-        val subject = "${getString(application, R.string.report_bug_email_subject)} v${version.value}"
+        val subject =
+            "${getString(application, R.string.report_bug_email_subject)} v${version.value}"
 
         return EmailModalModel(feedbackRecipientAddress, title, subject, "")
     }

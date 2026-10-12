@@ -2,11 +2,9 @@ package com.tstudioz.fax.fme.feature.iksica.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,10 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.contentColors
 import com.tstudioz.fax.fme.feature.iksica.models.Receipt
 import com.tstudioz.fax.fme.feature.iksica.models.ReceiptItem
-import com.tstudioz.fax.fme.feature.iksica.roundToTwo
+import com.tstudioz.fax.fme.feature.iksica.models.roundToTwo
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.theme.contentColors
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +44,6 @@ fun BottomSheetIksica(
         onDismissRequest = { toggleShowItem() },
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = { WindowInsets(0.dp) },
         dragHandle = { },
     ) {
         IksicaReceiptDetailed(receipt)
@@ -200,35 +198,37 @@ fun IksicaItemDetailed(item: ReceiptItem) {
 @Preview
 @Composable
 fun IksicaItemPreview() {
-    IksicaItem(
-        receipt = Receipt(
-            restaurant = "Restoran",
-            dateString = "Datum",
-            time = "Vrijeme",
-            receiptDetails = listOf(
-                ReceiptItem(
-                    articleName = "Naziv",
-                    amount = 1,
-                    total = 0.55,
-                    subsidizedAmount = 0.27,
-                    price = 0.58
-                )
-            ),
-            receiptAmount = 0.55,
-            subsidizedAmount = 0.27,
-            paidAmount = 0.55,
-            authorised = "Autorizacija",
-            url = "https://www.google.com",
-            date = LocalDate.now()
-        )
-    ) {}
+    AppTheme{
+        IksicaItem(
+            receipt = Receipt(
+                restaurant = "Restoran",
+                dateString = "Datum",
+                time = "Vrijeme",
+                receiptDetails = listOf(
+                    ReceiptItem(
+                        articleName = "Naziv",
+                        amount = 1,
+                        total = 0.55,
+                        subsidizedAmount = 0.27,
+                        price = 0.58
+                    )
+                ),
+                receiptAmount = 0.55,
+                subsidizedAmount = 0.27,
+                paidAmount = 0.55,
+                authorised = "Autorizacija",
+                url = "https://www.google.com",
+                date = LocalDate.now()
+            )
+        ) {}
+    }
 }
 
 
 @Preview
 @Composable
 fun IksicaReceiptDetailedPreview() {
-    Box(Modifier.background(MaterialTheme.colorScheme.background)) {
+    AppTheme {
         IksicaReceiptDetailed(
             receipt = Receipt(
                 restaurant = "Restoran",

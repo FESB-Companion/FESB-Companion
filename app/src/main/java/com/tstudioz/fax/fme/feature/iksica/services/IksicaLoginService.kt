@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.iksica.services
 
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -24,10 +24,10 @@ class IksicaLoginService(
 
         val response = client.newCall(request).execute()
         val success = response.isSuccessful
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         val doc = Jsoup.parse(body)
 
-        successfulIsspLoginAlready =  doc.selectFirst("a[aria-label='povratak u sustav']")
+        successfulIsspLoginAlready = doc.selectFirst("a[aria-label='povratak u sustav']")
             ?.text()?.contains("Povratak u sustav", true) == true
         successfulAaieduLoginAlready = doc.selectFirst("div[class=onscript-msg]")
             ?.text()?.contains("Uspješno ste autenticirani.", true) == true
@@ -71,7 +71,7 @@ class IksicaLoginService(
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = Jsoup.parse(response.body?.string() ?: "")
+        val doc = Jsoup.parse(response.body.string())
         sAMLResponse = doc.select("input[name=SAMLResponse]").attr("value")
 
         val content = doc.selectFirst("div.onscript-msg")?.text()
@@ -107,7 +107,7 @@ class IksicaLoginService(
             .build()
 
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         response.close()
 
         val error = Jsoup.parse(body).selectFirst(".alert-danger")?.text()

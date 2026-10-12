@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.gms.permission.ACTIVITY_RECOGNITION" />
 
@@ -13,31 +14,31 @@
     </queries>
 
     <application
-        android:name=".Application.FESBCompanion"
+        android:name=".FESBCompanion"
         android:allowBackup="false"
+        android:forceDarkAllowed="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="FESB Companion"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:replace="label"
-        android:forceDarkAllowed="false"
-        android:networkSecurityConfig="@xml/network_security_config">
+        tools:replace="label">
 
-    <meta-data
+        <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5944203368510130~8955475006"/>
+            android:value="ca-app-pub-5944203368510130~8955475006" />
 
         <activity
-            android:name=".feature.login.view.LoginActivity"
+            android:name=".feature.login.LoginActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Simple"
-            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,14 +50,14 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".view.activities.MainActivity"
-            android:screenOrientation="portrait"
+            android:name=".MainActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".feature.settings.SettingsActivity"
             android:label="Postavke"
-            android:parentActivityName=".view.activities.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SettingsTheme" />
     </application>

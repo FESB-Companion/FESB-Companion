@@ -1,11 +1,12 @@
 package com.tstudioz.fax.fme.feature.attendance.repository
 
 import android.util.Log
-import com.tstudioz.fax.fme.feature.attendance.ParseAttendance
 import com.tstudioz.fax.fme.feature.attendance.dao.AttendanceDao
 import com.tstudioz.fax.fme.feature.attendance.models.AttendanceEntry
 import com.tstudioz.fax.fme.feature.attendance.services.AttendanceServiceInterface
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.feature.attendance.utils.ParseAttendance
+import com.tstudioz.fax.fme.feature.attendance.utils.sortedByClassAndSemester
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -76,6 +77,3 @@ class AttendanceRepository(
     }
 
 }
-
-fun List<List<AttendanceEntry>>.sortedByClassAndSemester() = sortedBy { it.firstOrNull()?.subject }
-    .sortedBy { it.firstOrNull()?.semester }

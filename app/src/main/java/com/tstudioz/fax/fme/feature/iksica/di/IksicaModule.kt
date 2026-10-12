@@ -1,14 +1,16 @@
 package com.tstudioz.fax.fme.feature.iksica.di
 
+import com.tstudioz.fax.fme.BuildConfig
 import com.tstudioz.fax.fme.database.AppDatabase
+import com.tstudioz.fax.fme.feature.iksica.IksicaViewModel
 import com.tstudioz.fax.fme.feature.iksica.dao.IksicaDao
 import com.tstudioz.fax.fme.feature.iksica.repository.IksicaRepository
 import com.tstudioz.fax.fme.feature.iksica.repository.IksicaRepositoryInterface
+import com.tstudioz.fax.fme.feature.iksica.repository.MockIksicaRepository
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaLoginService
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaLoginServiceInterface
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaService
 import com.tstudioz.fax.fme.feature.iksica.services.IksicaServiceInterface
-import com.tstudioz.fax.fme.feature.iksica.view.IksicaViewModel
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import com.tstudioz.fax.fme.networking.interceptors.ISSPLoginInterceptor
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -24,7 +26,13 @@ val iksicaModule = module {
     single<IksicaLoginServiceInterface> { IksicaLoginService(get(), null, "", "") }
     single<OkHttpClient>(named("ISSPPortalClient")) { provideISSPPortalClient(get(), get()) }
     single<IksicaServiceInterface> { IksicaService(get(named("ISSPPortalClient"))) }
-    single<IksicaRepositoryInterface> { IksicaRepository(get(), get()) }
+    single<IksicaRepositoryInterface> {
+        if (BuildConfig.MOCK_REPOS_ENABLED) {
+            MockIksicaRepository(get())
+        } else {
+            IksicaRepository(get(), get())
+        }
+    }
     single<IksicaDao> { getIksicaDao(get()) }
     viewModel { IksicaViewModel(get(), get()) }
 }

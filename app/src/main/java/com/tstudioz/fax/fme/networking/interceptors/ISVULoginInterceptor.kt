@@ -1,9 +1,9 @@
 package com.tstudioz.fax.fme.networking.interceptors
 
-import com.tstudioz.fax.fme.common.user.models.User
 import com.tstudioz.fax.fme.feature.login.dao.UserDao
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatLoginServiceInterface
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
+import com.tstudioz.fax.fme.user.models.User
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -19,7 +19,9 @@ class ISVULoginInterceptor(
 ) : Interceptor {
 
     private val loginMutex = Mutex()
-    @Volatile private var ongoingRefresh: CompletableDeferred<Unit>? = null
+
+    @Volatile
+    private var ongoingRefresh: CompletableDeferred<Unit>? = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()

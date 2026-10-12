@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.home.services
 
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -15,9 +15,9 @@ class WeatherService(private val client: OkHttpClient) : WeatherServiceInterface
             .build()
 
         val response: Response = client.newCall(request).execute()
-        val value = response.body?.string()
+        val value = response.body.string()
 
-        if (!response.isSuccessful || value.isNullOrEmpty()) {
+        if (!response.isSuccessful || value.isEmpty()) {
             return NetworkServiceResult.WeatherResult.Failure(Throwable("Failed to fetch weather"))
         }
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -17,32 +18,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.lust
-import com.tstudioz.fax.fme.compose.meniColor
-import com.tstudioz.fax.fme.feature.home.view.HomeViewModel
-import com.tstudioz.fax.fme.feature.home.view.sidePadding
+import com.tstudioz.fax.fme.feature.home.HomeViewModel
+import com.tstudioz.fax.fme.feature.home.sidePadding
 import com.tstudioz.fax.fme.feature.iksica.compose.angledGradientBackground
+import com.tstudioz.fax.fme.theme.lust
+import com.tstudioz.fax.fme.theme.meniColor
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
-fun CardsCompose(openMenza: ()-> Unit, homeViewModel: HomeViewModel) {
+fun CardsCompose(openMenza: () -> Unit, homeViewModel: HomeViewModel) {
     Row(Modifier.padding(horizontal = sidePadding)) {
         Box(
             Modifier
                 .weight(0.5f)
         ) {
-            val noInternetMenza = stringResource(R.string.no_internet_menza)
+            val internetAvailable = homeViewModel.internetAvailable.observeAsState().value ?: false
             CardCompose(
                 stringResource(id = R.string.menza_title),
                 stringResource(id = R.string.menza_desc),
-                meniColor,
-                meniColor,
+                if (internetAvailable) meniColor else Color.DarkGray,
                 onClick = {
                     if (homeViewModel.internetAvailable.value == true) {
                         openMenza()
-                    } else {
-                        homeViewModel.showSnackbar(message = noInternetMenza)
                     }
                 })
         }
@@ -64,7 +62,13 @@ fun CardsCompose(openMenza: ()-> Unit, homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun CardCompose(title: String, description: String, color1: Color, color2: Color, onClick: () -> Unit = { }) {
+fun CardCompose(
+    title: String,
+    description: String,
+    color1: Color,
+    color2: Color = color1,
+    onClick: () -> Unit = { }
+) {
     Column(
         modifier = Modifier
             .padding(horizontal = 5.dp)

@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.studomat.services
 
 import android.util.Log
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -16,7 +16,7 @@ class StudomatService(private val client: OkHttpClient) {
             .url("https://www.isvu.hr/studomat/hr/index")
             .build()
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         val isSuccessful = response.isSuccessful
         response.close()
 
@@ -37,7 +37,7 @@ class StudomatService(private val client: OkHttpClient) {
             .url("https://www.isvu.hr/studomat/hr/studiranje/upisanegodine")
             .build()
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         val isSuccessful = response.isSuccessful
         response.close()
 
@@ -57,7 +57,7 @@ class StudomatService(private val client: OkHttpClient) {
             .url("https://www.isvu.hr$href")
             .build()
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         val isSuccessful = response.isSuccessful
         response.close()
 
