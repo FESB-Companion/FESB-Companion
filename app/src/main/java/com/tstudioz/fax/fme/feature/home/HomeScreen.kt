@@ -158,7 +158,7 @@ fun HomeScreen(
                         { menzaViewModel.openMenza() },
                         { homeViewModel.launchStudentskiUgovoriApp() },
                         internetAvailable = homeViewModel.internetAvailable,
-                        showSnackbar = { message -> homeViewModel.showSnackbar(message) })
+                        )
                 }
             }
 

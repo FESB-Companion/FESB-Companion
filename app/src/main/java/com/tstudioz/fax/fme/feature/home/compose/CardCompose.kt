@@ -19,35 +19,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.feature.home.HomeViewModel
 import com.tstudioz.fax.fme.feature.home.sidePadding
-import com.tstudioz.fax.fme.compose.lust
-import com.tstudioz.fax.fme.compose.meniColor
-import com.tstudioz.fax.fme.feature.home.view.sidePadding
 import com.tstudioz.fax.fme.feature.iksica.compose.angledGradientBackground
 import com.tstudioz.fax.fme.theme.lust
 import com.tstudioz.fax.fme.theme.meniColor
-import kotlinx.coroutines.InternalCoroutinesApi
 
-@OptIn(InternalCoroutinesApi::class)
 @Composable
-fun CardsCompose(openMenza: ()-> Unit, launchStudentskiUgovoriApp : () -> Unit, internetAvailable: LiveData<Boolean>, showSnackbar: (String) -> Unit) {
+fun CardsCompose(
+    openMenza: () -> Unit,
+    launchStudentskiUgovoriApp: () -> Unit,
+    internetAvailable: LiveData<Boolean>
+) {
     Row(Modifier.padding(horizontal = sidePadding)) {
         Box(
             Modifier
                 .weight(0.5f)
         ) {
-            val internetAvailable = homeViewModel.internetAvailable.observeAsState().value ?: false
-            val noInternetMenza = stringResource(R.string.no_internet_menza)
+            val internetAvailable = internetAvailable.observeAsState().value ?: false
             CardCompose(
                 stringResource(id = R.string.menza_title),
                 stringResource(id = R.string.menza_desc),
                 if (internetAvailable) meniColor else Color.DarkGray,
                 onClick = {
-                    if (internetAvailable.value == true) {
+                    if (internetAvailable) {
                         openMenza()
-                    } else {
-                        showSnackbar(noInternetMenza)
                     }
                 })
         }

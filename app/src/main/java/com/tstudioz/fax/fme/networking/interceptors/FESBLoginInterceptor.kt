@@ -1,9 +1,9 @@
 package com.tstudioz.fax.fme.networking.interceptors
 
-import com.tstudioz.fax.fme.common.user.models.User
 import com.tstudioz.fax.fme.feature.login.dao.UserDao
 import com.tstudioz.fax.fme.feature.login.services.UserServiceInterface
 import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
+import com.tstudioz.fax.fme.user.models.User
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request

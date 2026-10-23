@@ -60,7 +60,7 @@ import com.tstudioz.fax.fme.theme.theme_dark_onSurface
 import com.tstudioz.fax.fme.theme.theme_dark_secondaryContainer
 
 @Composable
-fun LoginCompose(
+fun LoginScreen(
     showLoading: MutableLiveData<Boolean>,
     snackbarHostState: SnackbarHostState,
     username: MutableLiveData<String>,
@@ -233,6 +233,7 @@ fun LoginScreenPreview() {
             MutableLiveData(""),
             MutableLiveData(""),
             MutableLiveData(true),
+            "emailOrUsernameText",
             {})
     }
 }

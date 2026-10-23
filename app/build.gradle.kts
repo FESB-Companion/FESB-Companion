@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     id("com.android.library")
@@ -8,7 +7,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-private val MOCK_DATA_DEBUG = "mockDataDebug"
 android {
     compileSdk = 37
     defaultConfig {
@@ -18,12 +16,19 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
         }
 
         debug {
             isMinifyEnabled = false
+        }
+
+        all {
+            buildConfigField(
+                "Boolean",
+                "MOCK_REPOS_ENABLED",
+                "false"
+            )
         }
     }
 
