@@ -1,16 +1,16 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
     kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
+private val MOCK_DATA_DEBUG = "mockDataDebug"
 android {
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -34,19 +34,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    viewBinding {
-        enable = true
-    }
-    dataBinding {
-        enable = true
-    }
     buildFeatures {
         buildConfig = true
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 
@@ -67,7 +63,6 @@ dependencies {
     implementation(libs.browser)
     implementation(libs.okhttp)
     implementation(libs.jsoup)
-    implementation(libs.particlesdrawable.library)
     implementation(libs.persistentcookiejar)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
@@ -93,6 +88,7 @@ dependencies {
     implementation(libs.ui.text.google.fonts)
     implementation(libs.dotsindicator)
     implementation(libs.glide)
+    implementation(libs.androidx.foundation)
 }
 
 configurations.all {

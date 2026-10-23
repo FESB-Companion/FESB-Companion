@@ -4,7 +4,7 @@ import android.util.Log
 import com.tstudioz.fax.fme.feature.home.models.WeatherDisplay
 import com.tstudioz.fax.fme.feature.home.models.WeatherFeature
 import com.tstudioz.fax.fme.feature.home.services.WeatherServiceInterface
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
@@ -34,7 +34,7 @@ class WeatherRepository(private val weatherNetworkService: WeatherServiceInterfa
                     return null
                 }
 
-                return WeatherDisplay(
+                WeatherDisplay(
                     "Split",
                     airTemperature,
                     summary

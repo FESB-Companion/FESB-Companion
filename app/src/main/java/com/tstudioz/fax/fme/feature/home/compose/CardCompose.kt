@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -18,10 +19,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.tstudioz.fax.fme.R
+import com.tstudioz.fax.fme.feature.home.HomeViewModel
+import com.tstudioz.fax.fme.feature.home.sidePadding
 import com.tstudioz.fax.fme.compose.lust
 import com.tstudioz.fax.fme.compose.meniColor
 import com.tstudioz.fax.fme.feature.home.view.sidePadding
 import com.tstudioz.fax.fme.feature.iksica.compose.angledGradientBackground
+import com.tstudioz.fax.fme.theme.lust
+import com.tstudioz.fax.fme.theme.meniColor
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)
@@ -32,12 +37,12 @@ fun CardsCompose(openMenza: ()-> Unit, launchStudentskiUgovoriApp : () -> Unit, 
             Modifier
                 .weight(0.5f)
         ) {
+            val internetAvailable = homeViewModel.internetAvailable.observeAsState().value ?: false
             val noInternetMenza = stringResource(R.string.no_internet_menza)
             CardCompose(
                 stringResource(id = R.string.menza_title),
                 stringResource(id = R.string.menza_desc),
-                meniColor,
-                meniColor,
+                if (internetAvailable) meniColor else Color.DarkGray,
                 onClick = {
                     if (internetAvailable.value == true) {
                         openMenza()
@@ -64,7 +69,13 @@ fun CardsCompose(openMenza: ()-> Unit, launchStudentskiUgovoriApp : () -> Unit, 
 }
 
 @Composable
-fun CardCompose(title: String, description: String, color1: Color, color2: Color, onClick: () -> Unit = { }) {
+fun CardCompose(
+    title: String,
+    description: String,
+    color1: Color,
+    color2: Color = color1,
+    onClick: () -> Unit = { }
+) {
     Column(
         modifier = Modifier
             .padding(horizontal = 5.dp)

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
-import com.tstudioz.fax.fme.common.user.models.UserRoom
+import com.tstudioz.fax.fme.user.models.UserRoom
 import kotlinx.coroutines.flow.Flow
 
 

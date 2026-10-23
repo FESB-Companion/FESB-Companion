@@ -3,6 +3,7 @@ package com.tstudioz.fax.fme.feature.studomat.repository
 import android.util.Log
 import com.tstudioz.fax.fme.feature.studomat.dao.StudomatDao
 import com.tstudioz.fax.fme.feature.studomat.data.parseCurrentYear
+import com.tstudioz.fax.fme.feature.studomat.data.parseSingleYear
 import com.tstudioz.fax.fme.feature.studomat.data.parseStudent
 import com.tstudioz.fax.fme.feature.studomat.data.parseYears
 import com.tstudioz.fax.fme.feature.studomat.data.sortedByNameAndSemester
@@ -10,18 +11,23 @@ import com.tstudioz.fax.fme.feature.studomat.models.StudomatYear
 import com.tstudioz.fax.fme.feature.studomat.models.StudomatYearInfo
 import com.tstudioz.fax.fme.feature.studomat.repository.models.StudomatRepositoryResult
 import com.tstudioz.fax.fme.feature.studomat.services.StudomatService
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 
 class StudomatRepository(
     private val studomatService: StudomatService,
     private val studomatDao: StudomatDao,
-) {
+) : StudomatRepositoryInterface {
 
-    fun getStudomatDataAndYears(): StudomatRepositoryResult.StudentAndYearsResult {
+    override fun getStudomatDataAndYears(): StudomatRepositoryResult.StudentAndYearsResult {
         val student = parseStudent(studomatService.getStudomatData())
 
         return when (val result = studomatService.getYearNames()) {
             is NetworkServiceResult.StudomatResult.Success -> {
+                if (result.redirectedUrl != null) {
+                    val parsedYear = parseSingleYear(result.data, result.redirectedUrl)
+                    Log.d("StudomatRepository", "getJednuGodinu: $parsedYear")
+                    return StudomatRepositoryResult.StudentAndYearsResult.Success(listOf(parsedYear), student)
+                }
                 val resultGetYears = parseYears(result.data)
                 Log.d("StudomatRepository", "getYears: $resultGetYears")
                 StudomatRepositoryResult.StudentAndYearsResult.Success(resultGetYears, student)
@@ -34,7 +40,7 @@ class StudomatRepository(
         }
     }
 
-    fun getYear(year: StudomatYearInfo): StudomatRepositoryResult.ChosenYearResult {
+    override fun getYear(year: StudomatYearInfo): StudomatRepositoryResult.ChosenYearResult {
         return when (val data = studomatService.getYearSubjects(year.href)) {
             is NetworkServiceResult.StudomatResult.Success -> {
                 val parsedSubjects = parseCurrentYear(data.data, year)
@@ -49,15 +55,15 @@ class StudomatRepository(
         }
     }
 
-    fun insert(year: StudomatYear) {
+    override fun insert(year: StudomatYear) {
         year.subjects.firstOrNull()?.year?.let { studomatDao.deleteAll(it) }
         studomatDao.insert(year.subjects)
         studomatDao.insertYears(listOf(year.yearInfo))
     }
 
-    fun readData(): List<StudomatYear> {
+    override fun readData(): List<StudomatYear> {
         val years = studomatDao.readYears().sortedBy { it.academicYear }
-        val subjects = studomatDao.read().sortedByNameAndSemester().groupBy { it.year  }
+        val subjects = studomatDao.read().sortedByNameAndSemester().groupBy { it.year }
         return years.mapNotNull { yearInfo ->
             subjects[yearInfo.academicYear]?.let { subjectsForYearAndCourse ->
                 StudomatYear(yearInfo, subjectsForYearAndCourse)

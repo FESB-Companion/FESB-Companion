@@ -34,9 +34,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.database.models.Event
-import com.tstudioz.fax.fme.util.testEvents
+import com.tstudioz.fax.fme.feature.timetable.models.Event
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.testStuff.testEvents
 import java.time.Duration
 import java.time.format.DateTimeFormatter
 
@@ -101,7 +101,7 @@ fun TimetableItem(event: Event) {
         ) {
             val dividerColor = MaterialTheme.colorScheme.outline
             val dividerWidth = 1.dp
-            val hours=  Duration.between(event.start, event.end).toMinutes() / 60f
+            val hours = Duration.between(event.start, event.end).toMinutes() / 60f
             val time = hours * 6
             Canvas(modifier = Modifier.size(Dp(time * 5.dp.value) + 5.dp, 10.dp)) {
                 val radius = 5.dp.toPx()

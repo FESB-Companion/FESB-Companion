@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.home.repository
 
-import com.tstudioz.fax.fme.database.models.Note
+import com.tstudioz.fax.fme.feature.attendance.models.Note
 
 interface NoteRepositoryInterface {
 

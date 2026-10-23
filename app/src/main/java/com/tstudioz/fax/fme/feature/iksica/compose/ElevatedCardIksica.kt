@@ -23,16 +23,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tstudioz.fax.fme.R
-import com.tstudioz.fax.fme.compose.AppTheme
-import com.tstudioz.fax.fme.compose.glowingColor
-import com.tstudioz.fax.fme.compose.gradientColors
 import com.tstudioz.fax.fme.feature.iksica.models.StudentData
-import java.util.Locale
+import com.tstudioz.fax.fme.theme.AppTheme
+import com.tstudioz.fax.fme.theme.glowingColor
+import com.tstudioz.fax.fme.theme.gradientColors
 
 @Preview
 @Composable
@@ -45,44 +45,47 @@ fun ElevatedCardIksica(
     val cornersRadius = 30.dp
     val glowingRadius = 100.dp
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(24.dp, 30.dp, 24.dp, 50.dp)
-        .aspectRatio(1.586f)
-        .drawBehind {
-            val canvasSize = size
-            drawContext.canvas.nativeCanvas.apply {
-                drawRoundRect(
-                    0f,
-                    0f,
-                    canvasSize.width, canvasSize.height,
-                    cornersRadius.toPx(), cornersRadius.toPx(),
-                    Paint().apply {
-                        isAntiAlias = true
-                        setShadowLayer(glowingRadius.toPx(), 0f, 0f, glowingColor.toArgb())
-                    })
-                drawRoundRect(
-                    0f,
-                    0f,
-                    canvasSize.width, canvasSize.height,
-                    cornersRadius.toPx(), cornersRadius.toPx(),
-                    Paint().apply {
-                        isAntiAlias = true
-                        setShadowLayer((glowingRadius / 4).toPx(), 0f, 0f, glowingColor.toArgb())
-                    })
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp, 30.dp, 24.dp, 50.dp)
+            .aspectRatio(1.586f)
+            .drawBehind {
+                val canvasSize = size
+                drawContext.canvas.nativeCanvas.apply {
+                    drawRoundRect(
+                        0f,
+                        0f,
+                        canvasSize.width, canvasSize.height,
+                        cornersRadius.toPx(), cornersRadius.toPx(),
+                        Paint().apply {
+                            isAntiAlias = true
+                            setShadowLayer(glowingRadius.toPx(), 0f, 0f, glowingColor.toArgb())
+                        })
+                    drawRoundRect(
+                        0f,
+                        0f,
+                        canvasSize.width, canvasSize.height,
+                        cornersRadius.toPx(), cornersRadius.toPx(),
+                        Paint().apply {
+                            isAntiAlias = true
+                            setShadowLayer((glowingRadius / 4).toPx(), 0f, 0f, glowingColor.toArgb())
+                        })
+                }
             }
-        }
-        .clip(shape = RoundedCornerShape(cornersRadius))
-        .angledGradientBackground(colors = gradientColors, degrees = 32f)
+            .clip(shape = RoundedCornerShape(cornersRadius))
+            .angledGradientBackground(colors = gradientColors, degrees = 32f)
     ) {
         Column(
             Modifier.clickable { onClick() },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(Modifier
-                .padding(25.dp)
-                .weight(0.7f)) {
+            Column(
+                Modifier
+                    .padding(25.dp)
+                    .weight(0.7f)
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
@@ -115,7 +118,7 @@ fun ElevatedCardIksica(
                     Text(
                         text = stringResource(
                             id = R.string.iksica_balance,
-                            String.format(Locale.getDefault(), "%.2f", balance)
+                            String.format(LocalLocale.current.platformLocale, "%.2f", balance)
                         ),
                         style = MaterialTheme.typography.displaySmall,
                         fontWeight = FontWeight.ExtraBold,
@@ -142,7 +145,8 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             )
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.daily_support_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(Locale.getDefault(), "%.2f", studentInfo.dailySupport)
+                    id = R.string.iksica_balance,
+                    String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.dailySupport)
                 )
             )
             CardIksicaPopupRow(leftText = stringResource(R.string.oib_label), rightText = studentInfo.oib)
@@ -158,7 +162,8 @@ fun CardIksicaPopupContent(studentInfo: StudentData) {
             CardIksicaPopupRow(leftText = stringResource(R.string.right_until_label), rightText = studentInfo.rightsTo)
             CardIksicaPopupRow(
                 leftText = stringResource(R.string.card_balance_label), rightText = stringResource(
-                    id = R.string.iksica_balance, String.format(Locale.getDefault(), "%.2f", studentInfo.balance)
+                    id = R.string.iksica_balance,
+                    String.format(LocalLocale.current.platformLocale, "%.2f", studentInfo.balance)
                 ), divider = false
             )
         }

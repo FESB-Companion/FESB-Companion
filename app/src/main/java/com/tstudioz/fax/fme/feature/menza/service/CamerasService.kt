@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.menza.service
 
-import com.tstudioz.fax.fme.feature.menza.CamerasResult
+import com.tstudioz.fax.fme.feature.menza.utils.CamerasResult
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -24,7 +24,7 @@ class CamerasService(private val client: OkHttpClient) : CamerasServiceInterface
             return CamerasResult.GetCamerasResult.Failure
         }
 
-        val doc = response.body?.string() ?: ""
+        val doc = response.body.string()
         response.close()
 
         return CamerasResult.GetCamerasResult.Success(doc)

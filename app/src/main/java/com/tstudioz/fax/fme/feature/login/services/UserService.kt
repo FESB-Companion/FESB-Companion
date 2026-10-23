@@ -1,7 +1,7 @@
 package com.tstudioz.fax.fme.feature.login.services
 
-import com.tstudioz.fax.fme.common.user.models.User
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
+import com.tstudioz.fax.fme.user.models.User
 import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -24,7 +24,7 @@ class UserService(private val client: OkHttpClient) : UserServiceInterface {
 
         val response = client.newCall(request).execute()
         val url = response.request.url
-        val nameOfUser = Jsoup.parse(response.body?.string() ?: "").select(".welcomeBack h2").text()
+        val nameOfUser = Jsoup.parse(response.body.string()).select(".welcomeBack h2").text()
 
         response.close()
 

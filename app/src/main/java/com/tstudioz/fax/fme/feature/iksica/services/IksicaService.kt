@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.iksica.services
 
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -14,7 +14,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
             .build()
 
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: ""
+        val body = response.body.string()
         response.close()
 
         if (!response.isSuccessful) {
@@ -30,7 +30,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string() ?: ""
+        val doc = response.body.string()
         response.close()
 
         //it can happen that there are no receipts in the last 30 days so it returns the start page (https://issp.srce.hr/student)
@@ -62,7 +62,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
             .build()
 
         val response = client.newCall(request).execute()
-        val doc = response.body?.string() ?: ""
+        val doc = response.body.string()
         response.close()
 
         if (Jsoup.parse(doc).selectFirst("h2")?.text()

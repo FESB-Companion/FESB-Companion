@@ -1,6 +1,6 @@
 package com.tstudioz.fax.fme.feature.timetable.services.interfaces
 
-import com.tstudioz.fax.fme.models.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.NetworkServiceResult
 
 interface TimetableServiceInterface {
 
