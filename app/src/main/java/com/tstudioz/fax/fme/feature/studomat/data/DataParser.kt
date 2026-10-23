@@ -19,6 +19,23 @@ fun parseYears(body: String): List<StudomatYearInfo> {
     return listOfYears
 }
 
+fun parseSingleYear(body: String, url: String): StudomatYearInfo {
+    val data = Jsoup.parse(body)
+    val table = data.select(".card-block .table.table-bordered tbody tr")
+    val academicYearText = data.selectFirst("#pozdravnaPoruka")?.text()?.substringAfter("godinu ")
+        ?: data.title().substringAfter("godinu ")
+
+    val endpoint = if (url.startsWith("http")) java.net.URI(url).path else url
+    val yearId = endpoint.substringAfterLast("/")
+
+    return StudomatYearInfo().apply {
+        id = yearId
+        studyProgram = table.select("td:contains(Upisani studij(i)) + td").text()
+        academicYear = academicYearText
+        href = endpoint
+    }
+}
+
 fun parseStudent(body: String): Student {
     val data = Jsoup.parse(body)
     return Student(
