@@ -39,13 +39,18 @@ class StudomatService(private val client: OkHttpClient) {
         val response = client.newCall(request).execute()
         val body = response.body.string()
         val isSuccessful = response.isSuccessful
+        val finalUrl = response.request.url.toString()
+        val isUpisEndpoint = finalUrl.contains("/upisanegodine/upis/")
         response.close()
 
         checkIfLoggedIn(body)
 
         return if (isSuccessful && body.isNotEmpty()) {
             Log.d("StudomatService", "getUpisaneGodine: ${body.substring(0, 100)}")
-            NetworkServiceResult.StudomatResult.Success(body)
+            NetworkServiceResult.StudomatResult.Success(
+                data = body,
+                redirectedUrl = finalUrl.takeIf { isUpisEndpoint }
+            )
         } else {
             Log.d("StudomatService", "getUpisaneGodine: Couldn't get upisane godine data!")
             NetworkServiceResult.StudomatResult.Failure(Throwable("Couldn't get upisane godine data!"))

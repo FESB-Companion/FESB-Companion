@@ -3,6 +3,7 @@ package com.tstudioz.fax.fme.feature.studomat.repository
 import android.util.Log
 import com.tstudioz.fax.fme.feature.studomat.dao.StudomatDao
 import com.tstudioz.fax.fme.feature.studomat.data.parseCurrentYear
+import com.tstudioz.fax.fme.feature.studomat.data.parseSingleYear
 import com.tstudioz.fax.fme.feature.studomat.data.parseStudent
 import com.tstudioz.fax.fme.feature.studomat.data.parseYears
 import com.tstudioz.fax.fme.feature.studomat.data.sortedByNameAndSemester
@@ -22,6 +23,11 @@ class StudomatRepository(
 
         return when (val result = studomatService.getYearNames()) {
             is NetworkServiceResult.StudomatResult.Success -> {
+                if (result.redirectedUrl != null) {
+                    val parsedYear = parseSingleYear(result.data, result.redirectedUrl)
+                    Log.d("StudomatRepository", "getJednuGodinu: $parsedYear")
+                    return StudomatRepositoryResult.StudentAndYearsResult.Success(listOf(parsedYear), student)
+                }
                 val resultGetYears = parseYears(result.data)
                 Log.d("StudomatRepository", "getYears: $resultGetYears")
                 StudomatRepositoryResult.StudentAndYearsResult.Success(resultGetYears, student)
