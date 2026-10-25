@@ -1,6 +1,7 @@
 package com.tstudioz.fax.fme.feature.iksica.services
 
 import com.tstudioz.fax.fme.networking.NetworkServiceResult
+import com.tstudioz.fax.fme.networking.cookies.MonsterCookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,6 +18,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
         val body = response.body.string()
         response.close()
 
+        checkIfLoggedIn(body, "Failure getStudentInfo: Not logged in")?.let { return it }
         if (!response.isSuccessful) {
             return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getAspNetSessionSAML"))
         }
@@ -43,11 +45,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
             return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getRacuni: nema računa u zadnjih 30 dana"))
         }
 
-        if (Jsoup.parse(doc).selectFirst("h2")?.text()
-                ?.contains("Odaberi nacin prijave u sustav") == true
-        ) {
-            return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getRacuni: Not logged in"))
-        }
+        checkIfLoggedIn(doc, "Failure getRacuni: Not logged in")?.let { return it }
 
         if (!response.isSuccessful) {
             return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getRacuni"))
@@ -65,11 +63,7 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
         val doc = response.body.string()
         response.close()
 
-        if (Jsoup.parse(doc).selectFirst("h2")?.text()
-                ?.contains("Odaberi nacin prijave u sustav") == true
-        ) {
-            return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getRacun: Not logged in"))
-        }
+        checkIfLoggedIn(doc, "Failure getRacun: Not logged in")?.let { return it }
 
         if (!response.isSuccessful) {
             return NetworkServiceResult.IksicaResult.Failure(Throwable("Failure getRacun"))
@@ -77,6 +71,18 @@ class IksicaService(private val client: OkHttpClient) : IksicaServiceInterface {
 
         return NetworkServiceResult.IksicaResult.Success(doc)
     }
+
+    private fun checkIfLoggedIn(body: String, failureMessage: String): NetworkServiceResult.IksicaResult? {
+        if (Jsoup.parse(body).selectFirst("h2")?.text()
+                ?.contains("Odaberi nacin prijave u sustav") == true
+        ) {
+            clearSession()
+            return NetworkServiceResult.IksicaResult.Failure(Throwable(failureMessage))
+        }
+        return null
+    }
+
+    private fun clearSession() = (client.cookieJar as MonsterCookieJar).clearISSPCookie()
 
     companion object {
         private const val SCHEME = "https"
