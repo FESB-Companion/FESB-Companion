@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tstudioz.fax.fme.R
 import com.tstudioz.fax.fme.feature.settings.model.EmailModalModel
-import com.tstudioz.fax.fme.feature.timetable.repository.TimeTableRepositoryInterface
 import com.tstudioz.fax.fme.user.UserRepositoryInterface
 import com.tstudioz.fax.fme.util.PreferenceHelper.get
 import com.tstudioz.fax.fme.util.PreferenceHelper.set
@@ -22,7 +21,6 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val application: Application,
     private val userRepository: UserRepositoryInterface,
-    private val timeTableRepository: TimeTableRepositoryInterface,
     private val sharedPreferences: SharedPreferences
 ) : AndroidViewModel(application) {
 
@@ -49,7 +47,6 @@ class SettingsViewModel(
     fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.deleteAllUserData()
-            timeTableRepository.deleteEventsCache()
             routeToLogin.emit(true)
             sharedPreferences.edit { clear() }
         }
