@@ -16,7 +16,7 @@ class MonsterCookieJar(
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
         val cookiesToSave = cookies.map { cookie ->
-            if (!(cookie.name.contains(authCookieISSP) || cookie.name== authCookieISVU)) {
+            if (!(cookie.name.contains(authCookieISSP) || cookie.name == authCookieISVU)) {
                 return@map cookie
             }
 
@@ -71,6 +71,7 @@ class MonsterCookieJar(
     fun clearISSPCookie() {
         clearCookies { it.contains(authCookieISSP) }
     }
+
     fun getISVUCookieForWebView(): String? {
         val cookie = loadForRequest(StudomatService.targetUrl).find { it.name == authCookieISVU }
         return if (cookie != null) cookie.name + "=" + cookie.value
