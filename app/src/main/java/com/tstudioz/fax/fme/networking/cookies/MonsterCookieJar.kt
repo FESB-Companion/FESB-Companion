@@ -16,18 +16,12 @@ class MonsterCookieJar(
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
         val cookiesToSave = cookies.map { cookie ->
-            if (!(cookie.name == authCookieISSP || cookie.name == authCookieISVU)) {
+            if (!(cookie.name.contains(authCookieISSP) || cookie.name == authCookieISVU)) {
                 return@map cookie
             }
 
-            Cookie.Builder()
-                .name(cookie.name)
-                .value(cookie.value)
-                .domain(cookie.domain)
-                .path(cookie.path)
+            cookie.newBuilder()
                 .expiresAt(System.currentTimeMillis() + expirationTime)
-                .secure()
-                .httpOnly()
                 .build()
         }
         super.saveFromResponse(url, cookiesToSave)
@@ -53,7 +47,7 @@ class MonsterCookieJar(
 
     fun isISSPTokenValid(): Boolean {
         val cookies = loadForRequest(IksicaService.targetUrl)
-        val authCookies = cookies.filter { it.name == authCookieISSP }
+        val authCookies = cookies.filter { it.name.contains(authCookieISSP) }
 
         return authCookies.isNotEmpty()
     }
@@ -65,12 +59,17 @@ class MonsterCookieJar(
         return authCookies.isNotEmpty()
     }
 
+    private fun clearCookies(nameMatches: (String) -> Boolean) {
+        persistor.removeAll(persistor.loadAll().filter { nameMatches(it.name) })
+        cache.removeAll { nameMatches(it.name) }
+    }
+
     fun clearISVUCookie() {
-        val cookie = persistor.loadAll().filter {
-            it.name == authCookieISVU
-        }
-        persistor.removeAll(cookie)
-        cache.removeAll { cookie.contains(it) }
+        clearCookies { it == authCookieISVU }
+    }
+
+    fun clearISSPCookie() {
+        clearCookies { it.contains(authCookieISSP) }
     }
 
     fun getISVUCookieForWebView(): String? {
